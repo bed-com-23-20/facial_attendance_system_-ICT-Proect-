@@ -9,7 +9,9 @@ const Enrollment = () => {
                         School
                         <select style={{ marginLeft: '10px' }}>
                             <option>Select a school</option>
-                            {/* Add school options here */}
+                            {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map(school => (
+                                <option key={school} value={school}>{school}</option>
+                            ))}
                         </select>
                     </label>
                 </div>
@@ -17,23 +19,27 @@ const Enrollment = () => {
                     <label>
                         Grade
                         <select style={{ marginLeft: '10px' }}>
-                            <option>Select a grade</option>
-                            {/* Add grade options here */}
+                            <option>Select a year</option>
+                            {[1, 2, 3, 4, 5].map(grade => (
+                                <option key={grade} value={grade}>{grade}</option>
+                            ))}
                         </select>
                     </label>
                 </div>
                 <div>
                     <label>
-                        Class/Section
+                        Program
                         <select style={{ marginLeft: '10px' }}>
-                            <option>Select a class</option>
-                            {/* Add class options here */}
+                            <option>Program of Study</option>
+                            {["Computer Science", "Statistics", "Political Science", "Bachelor of Arts", "Information System"].map(program => (
+                                <option key={program} value={program}>{program}</option>
+                            ))}
                         </select>
                     </label>
                 </div>
                 <div>
                     <span style={{ fontWeight: 'bold' }}>Academic Year</span>
-                    <span style={{ color: 'red', marginLeft: '5px' }}>2024</span>
+                    <span style={{ color: 'red', marginLeft: '5px' }}>2025</span>
                 </div>
             </div>
         </div>
