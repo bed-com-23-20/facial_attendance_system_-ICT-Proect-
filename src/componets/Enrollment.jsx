@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Enrollment = () => {
+    const [selectedSchool, setSelectedSchool] = useState('');
+
+    const handleSchoolChange = (event) => {
+        setSelectedSchool(event.target.value);
+    };
+
     return (
         <div style={{ padding: '10px' }}>
             <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
@@ -8,8 +14,8 @@ const Enrollment = () => {
                     <div> 
                         <label>
                             School
-                            <select style={{ marginLeft: '10px' }}>
-                                <option>Select a school</option>
+                            <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
+                                <option value="">Select a school</option>
                                 {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map(school => (
                                     <option key={school} value={school}>{school}</option>
                                 ))}
@@ -38,14 +44,24 @@ const Enrollment = () => {
                             </select>
                         </label>
                     </div>
-                        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-                            <span style={{ fontWeight: 'bold' }}>Academic Year</span>
-                            <span style={{ color: 'red', marginLeft: '5px' }}>2025</span>
+                    <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+                        <span style={{ fontWeight: 'bold' }}>Academic Year</span>
+                        <span style={{ color: 'red', marginLeft: '5px' }}>2025</span>
                     </div>
                 </div>
             </div>
+            {selectedSchool && (
+                <div style={{ marginTop: '20px' }}>
+                    <h2>Enrollments</h2>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}> 
+                        <button style={{ marginLeft: '10px' }}>Search student</button>
+                        <button style={{ marginLeft: '10px' }}>Enroll student</button>
+                        <button style={{ marginLeft: '10px' }}>Download PDF</button>
+                    </div>
+                </div>
+            )}
         </div>
-        
-);
-}
+    );
+};
+
 export default Enrollment;
