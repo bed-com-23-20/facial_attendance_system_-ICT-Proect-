@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+//import 'font-awesome/css/font-awesome.min.css';
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
@@ -10,7 +11,7 @@ const Enrollment = () => {
     return (
         <div style={{ padding: '10px' }}>
             <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Arial', }}> 
+                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Roboto, sans-serif', }}> 
                     <div> 
                         <label>
                             School
@@ -54,14 +55,74 @@ const Enrollment = () => {
                 <div style={{ marginTop: '20px' }}>
                     <h2>Enrollments</h2>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}> 
-                        <button style={{ marginLeft: '10px' }}>Search student</button>
-                        <button style={{ marginLeft: '10px' }}>Enroll student</button>
-                        <button style={{ marginLeft: '10px' }}>Download PDF</button>
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                            <input type="text" placeholder="Search Student" style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc', paddingLeft: '30px' }} /> 
+                            <i className="fas fa-search" style={{ position: 'absolute', left: '10px', color: '#ccc' }}></i>
+                        </div>
+                        <button style={{ marginLeft: '10px' }}>
+                            <i className="fas fa-user-plus" style={{ marginRight: '5px' }}></i>
+                            Enroll Student
+                        </button>
+                        <button style={{ marginLeft: '10px' }}>
+                            <i className="fas fa-download" style={{ marginRight: '5px' }}></i> 
+                            Download PDF
+                        </button>
                     </div>
                 </div>
             )}
+
+
+<div style={{ 
+    display: "flex", 
+    justifyContent: "center", 
+    alignItems: "flex-start", // Moves content towards the top
+    height: "100vh",
+    fontSize: "1rem",
+    fontFamily: "Roboto, sans-serif",
+    backgroundColor: "#f4f4f4",
+    padding: "20px"
+}}>
+    <div style={{
+        padding: "20px",
+        backgroundColor: "#fff",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        maxWidth: "700px",
+        width: "90%",
+        textAlign: "left",
+        minHeight: "200px",
+        marginTop: "100px" // Adjust this value to control top spacing
+    }}>
+        <h3>SEMIS-Enrollment</h3>
+        <p>Follow the instructions to proceed:</p>
+        <ul>
+            <li>Select the Organization unit you want to view data</li>
+            <li>Use global filters (Class, Grade, and Academic Year)</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+            {/* <div style={{}}> 
+                <h3>SEMIS-Enrollment</h3>
+                <p>Follow the instructions to proceed:</p>
+                <ul>
+                    <li>Select the Organization unit you want to view data</li>
+                    <li>Use global filters(Class, Grade and Academic Year)</li>
+                </ul>
+            </div> */}
+
         </div>
+
+        
     );
+
+
+
 };
 
 export default Enrollment;
