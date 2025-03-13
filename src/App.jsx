@@ -3,6 +3,7 @@ import i18n from '@dhis2/d2-i18n'
 import React from 'react'
 import classes from './App.module.css'
 import Enrollment from './componets/Enrollment'
+import EnrollmentForm from './componets/EnrollmentForm'
 
 const query = {
     me: {
@@ -25,7 +26,8 @@ const MyApp = () => {
         <div className={classes.container}>
             {/* <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
             <h3>{i18n.t('Welcome to DHIS2!')}</h3> */}
-            <Enrollment />
+            {/* <Enrollment /> */}
+            <EnrollmentForm />
 
         </div>
     )

@@ -51,7 +51,7 @@ const Enrollment = () => {
                     </div>
                 </div>
             </div>
-            {selectedSchool && (
+            {selectedSchool ? (
                 <div style={{ marginTop: '20px' }}>
                     <h2>Enrollments</h2>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}> 
@@ -69,43 +69,34 @@ const Enrollment = () => {
                         </button>
                     </div>
                 </div>
-            )}
-
-
-            <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", height: "100vh", fontSize: "1rem",
-                fontFamily: "Roboto, sans-serif",
-                backgroundColor: "#f4f4f4",
-                padding: "20px"
-            }}>
-                <div style={{
-                    padding: "20px",
-                    backgroundColor: "#fff",
-                    borderRadius: "10px",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    maxWidth: "700px",
-                    width: "90%",
-                    textAlign: "left",
-                    minHeight: "200px",
-                    marginTop: "100px"
+            ) : (
+                <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", height: "100vh", fontSize: "1rem",
+                    fontFamily: "Roboto, sans-serif",
+                    backgroundColor: "#f4f4f4",
+                    padding: "20px"
                 }}>
-                    <h3>SEMIS-Enrollment</h3>
-                    <p>Follow the instructions to proceed:</p>
-                    <ul>
-                        <li>Select the Organization unit you want to view data</li>
-                        <li>Use global filters (Class, Grade, and Academic Year)</li>
-                    </ul>
+                    <div style={{
+                        padding: "20px",
+                        backgroundColor: "#fff",
+                        borderRadius: "10px",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                        maxWidth: "700px",
+                        width: "90%",
+                        textAlign: "left",
+                        minHeight: "200px",
+                        marginTop: "100px"
+                    }}>
+                        <h3>SEMIS-Enrollment</h3>
+                        <p>Follow the instructions to proceed:</p>
+                        <ul>
+                            <li>Select the Organization unit you want to view data</li>
+                            <li>Use global filters (Class, Grade, and Academic Year)</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-
-
-
+            )}
         </div>
-
-        
     );
-
-
-
 };
 
 export default Enrollment;
