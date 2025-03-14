@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Home, Users, Clock, FileText, GraduationCap, Repeat,ArrowRight,ArrowLeft } from "lucide-react";
 import "./Dashboard.css";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => (
   <div className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`}>
@@ -16,11 +17,13 @@ const Sidebar = ({ isOpen }) => (
         { label: "Final result", icon: GraduationCap },
         { label: "Transfer", icon: Repeat }
       ].map(({ label, icon: Icon }) => (
+        <a href={label}>
         <div key={label} className="sidebar-item">
           <Icon className="icon"/>
          
           {isOpen && <span>{label}</span>}
         </div>
+        </a>
       ))}
     </nav>
   </div>
@@ -52,11 +55,7 @@ const Dashboard = () => {
               <div className="divider"></div>
               <span className="card-label">{label}</span>
               <div className="divider"></div>
-              {/* <div className="bottom_bt"> */}
-                <button onClick={() => handleNavigation("http://localhost:3000/Enrollment")} className="bottom_bt">
-                  <ArrowRight />
-                </button>
-              {/* </div> */}
+              <Link className="link-to" to={label}> Go to</Link>
             </div>
           ))}
         </div>
