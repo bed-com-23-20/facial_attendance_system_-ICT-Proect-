@@ -9,7 +9,12 @@ const EnrollmentForm = () => {
         grade: '',
         classSection: '',
         enrollmentDate: null,
-        systemId: '2025-ts791464'
+        firstName: '',
+        surname: '',
+        gender: '',
+        dateOfBirth: null,
+        nationality: '',
+        guardianName: ''
     });
 
     const handleChange = (e) => {
@@ -19,10 +24,10 @@ const EnrollmentForm = () => {
         });
     };
 
-    const handleDateChange = (date) => {
+    const handleDateChange = (name, date) => {
         setFormData({
             ...formData,
-            enrollmentDate: date
+            [name]: date
         });
     };
 
@@ -69,35 +74,37 @@ const EnrollmentForm = () => {
                         <TextField
                             fullWidth
                             select
-                            label="Grade"
-                            name="grade"
+                            label="Year of Study"
+                            name="yearOfStudy"
                             value={formData.grade}
                             onChange={handleChange}
                         >
                             <MenuItem value="1">1</MenuItem>
                             <MenuItem value="2">2</MenuItem>
                             <MenuItem value="3">3</MenuItem>
+                            <MenuItem value="4">4</MenuItem>
+                            <MenuItem value="5">5</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
                             select
-                            label="Class/Section"
-                            name="classSection"
+                            label="Program of Study" 
+                            name="programOfStudy"
                             value={formData.classSection}
                             onChange={handleChange}
                         >
-                            <MenuItem value="A">A</MenuItem>
-                            <MenuItem value="B">B</MenuItem>
-                            <MenuItem value="C">C</MenuItem>
+                            <MenuItem value="Science">Science</MenuItem>
+                            <MenuItem value="Arts">Arts</MenuItem>
+                            <MenuItem value="Commerce">Commerce</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
                         <DatePicker
                             label="Enrollment date"
                             value={formData.enrollmentDate}
-                            onChange={handleDateChange}
+                            onChange={(date) => handleDateChange('enrollmentDate', date)}
                             renderInput={(params) => <TextField fullWidth {...params} />}
                         />
                     </Grid>
@@ -109,11 +116,59 @@ const EnrollmentForm = () => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
-                            label="System ID"
-                            name="systemId"
-                            value={formData.systemId}
+                            label="First Name"
+                            name="firstName"
+                            value={formData.firstName}
                             onChange={handleChange}
-                            disabled
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Surname"
+                            name="surname"
+                            value={formData.surname}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            select
+                            label="Gender"
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleChange}
+                        >
+                            <MenuItem value="Male">Male</MenuItem>
+                            <MenuItem value="Female">Female</MenuItem>
+                            <MenuItem value="Other">Other</MenuItem>
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <DatePicker
+                            label="Date of Birth"
+                            value={formData.dateOfBirth}
+                            onChange={(date) => handleDateChange('dateOfBirth', date)}
+                            renderInput={(params) => <TextField fullWidth {...params} />}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Nationality"
+                            name="nationality"
+                            value={formData.nationality}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Guardian's Name"
+                            name="guardianName"
+                            value={formData.guardianName}
+                            onChange={handleChange}
                         />
                     </Grid>
                 </Grid>
