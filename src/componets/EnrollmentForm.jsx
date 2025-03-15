@@ -55,7 +55,7 @@ const EnrollmentForm = () => {
                         <TextField
                             fullWidth
                             select
-                            label="Academic Year_Package"
+                            label="Academic Year"
                             name="academicYear"
                             value={formData.academicYear}
                             onChange={handleChange}
