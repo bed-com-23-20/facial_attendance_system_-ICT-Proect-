@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/material';
-import { DatePicker } from '@mui/lab';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const EnrollmentForm = () => {
     const [formData, setFormData] = useState({
-        school: 'Bethel BCS',
+        school: '',
         academicYear: '',
-        grade: '',
-        classSection: '',
+        yearOfStudy: '',
+        programOfStudy: '',
         enrollmentDate: null,
         firstName: '',
         surname: '',
@@ -39,7 +40,7 @@ const EnrollmentForm = () => {
     return (
         <Container maxWidth="sm">
             <Typography variant="h5" gutterBottom>
-                Single Student Enrollment
+                Student Enrollment Form
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Typography variant="h6" gutterBottom>
@@ -76,7 +77,7 @@ const EnrollmentForm = () => {
                             select
                             label="Year of Study"
                             name="yearOfStudy"
-                            value={formData.grade}
+                            value={formData.yearOfStudy}
                             onChange={handleChange}
                         >
                             <MenuItem value="1">1</MenuItem>
@@ -92,7 +93,7 @@ const EnrollmentForm = () => {
                             select
                             label="Program of Study" 
                             name="programOfStudy"
-                            value={formData.classSection}
+                            value={formData.programOfStudy}
                             onChange={handleChange}
                         >
                             <MenuItem value="Science">Science</MenuItem>
@@ -101,12 +102,14 @@ const EnrollmentForm = () => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
-                        <DatePicker
-                            label="Enrollment date"
-                            value={formData.enrollmentDate}
-                            onChange={(date) => handleDateChange('enrollmentDate', date)}
-                            renderInput={(params) => <TextField fullWidth {...params} />}
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                label="Enrollment date"
+                                value={formData.enrollmentDate}
+                                onChange={(date) => handleDateChange('enrollmentDate', date)}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
+                            />
+                        </LocalizationProvider>
                     </Grid>
                 </Grid>
                 <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
@@ -146,12 +149,14 @@ const EnrollmentForm = () => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
-                        <DatePicker
-                            label="Date of Birth"
-                            value={formData.dateOfBirth}
-                            onChange={(date) => handleDateChange('dateOfBirth', date)}
-                            renderInput={(params) => <TextField fullWidth {...params} />}
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                label="Date of Birth"
+                                value={formData.dateOfBirth}
+                                onChange={(date) => handleDateChange('dateOfBirth', date)}
+                                renderInput={(params) => <TextField fullWidth {...params} />}
+                            />
+                        </LocalizationProvider>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -172,9 +177,18 @@ const EnrollmentForm = () => {
                         />
                     </Grid>
                 </Grid>
-                <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>
-                    Submit
-                </Button>
+                <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }} justifyContent="space-between">
+                    <Grid item xs={5}>
+                        <Button fullWidth type="button" variant="contained" color="primary">
+                            Clear and Cancel
+                        </Button>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Button fullWidth type="submit" variant="contained" color="primary">
+                            Save and Submit
+                        </Button> 
+                    </Grid>
+                </Grid>
             </form>
         </Container>
     );
