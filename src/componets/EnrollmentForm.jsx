@@ -107,7 +107,7 @@ const EnrollmentForm = () => {
                                 label="Enrollment date"
                                 value={formData.enrollmentDate}
                                 onChange={(date) => handleDateChange('enrollmentDate', date)}
-                                renderInput={(params) => <TextField fullWidth {...params} />}
+                                renderInput={(params) => <TextField {...params} fullWidth />} 
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -178,12 +178,12 @@ const EnrollmentForm = () => {
                     </Grid>
                 </Grid>
                 <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }} justifyContent="space-between">
-                    <Grid item xs={5}>
+                    <Grid item xs={12} sm={5}>
                         <Button fullWidth type="button" variant="contained" color="primary">
                             Clear and Cancel
                         </Button>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} sm={5}>
                         <Button fullWidth type="submit" variant="contained" color="primary">
                             Save and Submit
                         </Button> 
