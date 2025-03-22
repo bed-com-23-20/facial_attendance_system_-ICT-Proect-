@@ -119,15 +119,54 @@ const EnrollmentForm = ({ school }) => {
                 <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
                     Student Profile
                 </Typography>
+
                 <Grid container spacing={3}>
                     {/* Profile Picture Field */}
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
+                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                        {formData.profilePicture ? (
+                            <div style={{ position: "relative", display: "inline-block" }}>
+                                <img
+                                    src={formData.profilePicture}
+                                    alt="Profile Preview"
+                                    style={{
+                                        width: "150px",
+                                        height: "150px",
+                                        borderRadius: "50%",
+                                        objectFit: "cover",
+                                        border: "2px solid #ccc",
+                                    }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    style={{
+                                        position: "absolute",
+                                        bottom: "10px",
+                                        right: "10px",
+                                        borderRadius: "50%",
+                                        minWidth: "0",
+                                        padding: "5px",
+                                    }}
+                                    onClick={() => document.getElementById("profilePictureInput").click()}
+                                >
+                                    ✏️
+                                </Button>
+                            </div>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => document.getElementById("profilePictureInput").click()}
+                            >
+                                Upload Profile Picture
+                            </Button>
+                        )}
+                        <input
+                            id="profilePictureInput"
                             type="file"
-                            inputProps={{ accept: "image/*" }}
-                            label="Profile Picture"
-                            name="profilePicture"
+                            accept="image/*"
+                            style={{ display: "none" }}
                             onChange={(e) => {
                                 const file = e.target.files[0];
                                 if (file) {
@@ -143,7 +182,7 @@ const EnrollmentForm = ({ school }) => {
                             }}
                         />
                     </Grid>
-                    {formData.profilePicture && (
+                    {/* {formData.profilePicture && (
                         <Grid item xs={12}>
                             <img
                                 src={formData.profilePicture}
@@ -151,7 +190,7 @@ const EnrollmentForm = ({ school }) => {
                                 style={{ width: "100%", maxHeight: "300px", objectFit: "cover" }}
                             />
                         </Grid>
-                    )}
+                    )} */}
 
                     {/* First Name Field */}
                     <Grid item xs={12}>
