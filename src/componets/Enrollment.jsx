@@ -43,9 +43,9 @@ const Enrollment = () => {
                             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                             maxWidth: '700px',
                             width: '90%',
-                            maxHeight: '90vh', // Limit height to 90% of the viewport
-                            overflowY: 'auto', // Enable scrolling for overflowing content
-                            position: 'relative', // Required for positioning the close button
+                            maxHeight: '90vh',
+                            overflowY: 'auto',
+                            position: 'relative',
                         }}
                     >
                         {/* Close Button */}
@@ -66,7 +66,8 @@ const Enrollment = () => {
                             &times;
                         </button>
 
-                        <EnrollmentForm />
+{/* Enrollment form component */}
+                        <EnrollmentForm school={selectedSchool}/>
                     </div>
                 </div>
             )}

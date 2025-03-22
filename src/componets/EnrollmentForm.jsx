@@ -3,7 +3,7 @@ import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/m
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-const EnrollmentForm = () => {
+const EnrollmentForm = ({ school }) => {
     const [formData, setFormData] = useState({
         school: '',
         academicYear: '',
@@ -15,20 +15,21 @@ const EnrollmentForm = () => {
         gender: '',
         dateOfBirth: null,
         nationality: '',
-        guardianName: ''
+        guardianName: '',
+        profilePicture: null,
     });
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const handleDateChange = (name, date) => {
         setFormData({
             ...formData,
-            [name]: date
+            [name]: date,
         });
     };
 
@@ -50,11 +51,12 @@ const EnrollmentForm = () => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
-                            label="Registering School"
+                            label={school}
                             name="school"
                             value={formData.school}
                             onChange={handleChange}
                             disabled
+                            helperText="This is the school selected for enrollment"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -91,14 +93,16 @@ const EnrollmentForm = () => {
                         <TextField
                             fullWidth
                             select
-                            label="Program of Study" 
+                            label="Program of Study"
                             name="programOfStudy"
                             value={formData.programOfStudy}
                             onChange={handleChange}
                         >
-                            <MenuItem value="Science">Science</MenuItem>
-                            <MenuItem value="Arts">Arts</MenuItem>
-                            <MenuItem value="Commerce">Commerce</MenuItem>
+                            <MenuItem value="ComputerScience">Computer Science</MenuItem>
+                            <MenuItem value="Statistics">Statistics</MenuItem>
+                            <MenuItem value="PoliticalScience">Political Science</MenuItem>
+                            <MenuItem value="Arts">Bachelor of Arts</MenuItem>
+                            <MenuItem value="InformationSystem">Information System</MenuItem>
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
@@ -107,15 +111,49 @@ const EnrollmentForm = () => {
                                 label="Enrollment date"
                                 value={formData.enrollmentDate}
                                 onChange={(date) => handleDateChange('enrollmentDate', date)}
-                                renderInput={(params) => <TextField {...params} fullWidth />} 
+                                renderInput={(params) => <TextField {...params} fullWidth />}
                             />
                         </LocalizationProvider>
                     </Grid>
                 </Grid>
                 <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
-                    Student profile
+                    Student Profile
                 </Typography>
                 <Grid container spacing={3}>
+                    {/* Profile Picture Field */}
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            type="file"
+                            inputProps={{ accept: "image/*" }}
+                            label="Profile Picture"
+                            name="profilePicture"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = () => {
+                                        setFormData({
+                                            ...formData,
+                                            profilePicture: reader.result,
+                                        });
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                        />
+                    </Grid>
+                    {formData.profilePicture && (
+                        <Grid item xs={12}>
+                            <img
+                                src={formData.profilePicture}
+                                alt="Profile Preview"
+                                style={{ width: "100%", maxHeight: "300px", objectFit: "cover" }}
+                            />
+                        </Grid>
+                    )}
+
+                    {/* First Name Field */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -125,6 +163,8 @@ const EnrollmentForm = () => {
                             onChange={handleChange}
                         />
                     </Grid>
+
+                    {/* Surname Field */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -134,6 +174,8 @@ const EnrollmentForm = () => {
                             onChange={handleChange}
                         />
                     </Grid>
+
+                    {/* Gender Field */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -148,6 +190,8 @@ const EnrollmentForm = () => {
                             <MenuItem value="Other">Other</MenuItem>
                         </TextField>
                     </Grid>
+
+                    {/* Date of Birth Field */}
                     <Grid item xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
@@ -158,6 +202,8 @@ const EnrollmentForm = () => {
                             />
                         </LocalizationProvider>
                     </Grid>
+
+                    {/* Nationality Field */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -167,6 +213,8 @@ const EnrollmentForm = () => {
                             onChange={handleChange}
                         />
                     </Grid>
+
+                    {/* Guardian's Name Field */}
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -186,7 +234,7 @@ const EnrollmentForm = () => {
                     <Grid item xs={12} sm={5}>
                         <Button fullWidth type="submit" variant="contained" color="primary">
                             Save and Submit
-                        </Button> 
+                        </Button>
                     </Grid>
                 </Grid>
             </form>
