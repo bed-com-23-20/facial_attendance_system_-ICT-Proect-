@@ -155,7 +155,7 @@ const Enrollment = () => {
                         </button>
                     </div>
 
-                    {/* Display Enrollments in a Table */}
+                    {/* Display Enrollments in a Table */} 
                     {enrollments.length > 0 && (
                         <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
                             <thead>

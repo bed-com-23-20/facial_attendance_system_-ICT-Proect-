@@ -95,6 +95,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                         <TextField
                             fullWidth
                             select
+                            required
                             label="Academic Year"
                             name="academicYear"
                             value={formData.academicYear}
@@ -109,6 +110,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                         <TextField
                             fullWidth
                             select
+                            required
                             label="Year of Study"
                             name="yearOfStudy"
                             value={formData.yearOfStudy}
@@ -121,10 +123,11 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                             <MenuItem value="5">5</MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12}> 
                         <TextField
                             fullWidth
                             select
+                            required 
                             label="Program of Study"
                             name="programOfStudy"
                             value={formData.programOfStudy}
@@ -140,6 +143,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
+                                required
                                 label="Enrollment Date"
                                 value={formData.enrollmentDate}
                                 onChange={(date) => handleDateChange('enrollmentDate', date)}
@@ -203,6 +207,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
+                            required
                             label="First Name"
                             name="firstName"
                             value={formData.firstName}
@@ -212,6 +217,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
+                            required
                             label="Surname"
                             name="surname"
                             value={formData.surname}
@@ -222,6 +228,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                         <TextField
                             fullWidth
                             select
+                            required
                             label="Gender"
                             name="gender"
                             value={formData.gender}
@@ -235,6 +242,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
+                                required
                                 label="Date of Birth"
                                 value={formData.dateOfBirth}
                                 onChange={(date) => handleDateChange('dateOfBirth', date)}
@@ -245,6 +253,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
+                            required
                             label="Nationality"
                             name="nationality"
                             value={formData.nationality}
@@ -254,6 +263,7 @@ const EnrollmentForm = ({ school, onSubmit }) => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
+                            required
                             label="Guardian's Name"
                             name="guardianName"
                             value={formData.guardianName}
