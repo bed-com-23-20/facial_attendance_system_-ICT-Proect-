@@ -160,8 +160,10 @@ const Enrollment = () => {
                         <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr>
+                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Profile Picture</th>
                                     <th style={{ border: '1px solid #ccc', padding: '8px' }}>First Name</th>
                                     <th style={{ border: '1px solid #ccc', padding: '8px' }}>Surname</th>
+                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>School</th>
                                     <th style={{ border: '1px solid #ccc', padding: '8px' }}>Gender</th>
                                     <th style={{ border: '1px solid #ccc', padding: '8px' }}>Date of Birth</th>
                                     <th style={{ border: '1px solid #ccc', padding: '8px' }}>Nationality</th>
@@ -171,12 +173,20 @@ const Enrollment = () => {
                             <tbody>
                                 {enrollments.map((enrollment, index) => (
                                     <tr key={index}>
+                                        <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'center' }}>
+                                            <img
+                                                src={enrollment.profilePicture || 'https://via.placeholder.com/50'}
+                                                alt="Profile"
+                                                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                                            />
+                                        </td>
                                         <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.firstName}</td>
                                         <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.surname}</td>
+                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.school}</td>
                                         <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.gender}</td>
                                         <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.dateOfBirth?.toLocaleDateString()}</td>
                                         <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.nationality}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.guardianName}</td>
+                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.guardianName}</td> 
                                     </tr>
                                 ))}
                             </tbody>
