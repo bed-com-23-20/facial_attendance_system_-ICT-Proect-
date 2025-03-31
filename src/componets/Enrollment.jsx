@@ -212,8 +212,11 @@ const Enrollment = () => {
                                                     cursor: 'pointer',
                                                 }}
                                                 onClick={() => {
-                                                    const updatedEnrollments = enrollments.filter((_, i) => i !== index);
-                                                    setEnrollments(updatedEnrollments);
+                                                    const confirmDelete = window.confirm('Are you sure you want to delete this enrollment?');
+                                                    if (confirmDelete) {
+                                                        const updatedEnrollments = enrollments.filter((_, i) => i !== index);
+                                                        setEnrollments(updatedEnrollments);
+                                                    }
                                                 }}
                                             >
                                                 <FontAwesomeIcon icon={faTrash} style={{ color: '#f44336' }} />
