@@ -1,5 +1,5 @@
 {
-  "name": "facial-attendance",
+  "name": "my-app",
   "version": "1.0.0",
   "description": "",
   "license": "BSD-3-Clause",
@@ -11,6 +11,7 @@
     "deploy": "d2-app-scripts deploy"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@dhis2/cli-app-scripts": "^12.3.0"
   },
   "dependencies": {
@@ -28,5 +29,15 @@
     "font-awesome": "^4.7.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+=======
+    "@dhis2/cli-app-scripts": "^12.3.0",
+    "react-router-dom": "^7.3.0"
+  },
+  "dependencies": {
+    "@dhis2/app-runtime": "^3.14.0",
+    "@dhis2/ui": "^10.3.1",
+    "lucide-react": "^0.479.0",
+    "react-icons": "^5.5.0"
+>>>>>>> ad1d414e9c6568e380a9fdd6fce36031195f7a8c
   }
 }
