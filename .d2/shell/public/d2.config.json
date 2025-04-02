@@ -1,0 +1,10 @@
+{
+  "type": "app",
+  "name": "facial-attendance",
+  "version": "1.0.0",
+  "description": "",
+  "title": "facial-attendance",
+  "entryPoints": {
+    "app": "index.html"
+  }
+}

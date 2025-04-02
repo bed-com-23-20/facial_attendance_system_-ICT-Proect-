@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project was bootstrapped with [DHIS2 Application Platform](https://github.com/dhis2/app-platform).
 
 ## Available Scripts
@@ -43,3 +44,9 @@ You can learn more about the platform in the [DHIS2 Application Platform Documen
 You can learn more about the runtime in the [DHIS2 Application Runtime Documentation](https://runtime.dhis2.nu/).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+=======
+# Facial_Attendance_System_-ICT-Proect
+Facial Recognition system is the system which will be used to record parliamentary attendance lists by recognizing the faces of the members of the parliament who are present at a particular meeting. This system will be using an installed camera to take pictures on entrance and then it will match
+with one in a database. if the face matches with the face in a database, it will mark a person has
+attended the session
+>>>>>>> main
