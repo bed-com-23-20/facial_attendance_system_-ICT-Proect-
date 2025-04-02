@@ -27,7 +27,7 @@ const MyApp = () => {
         <div className={classes.container}>
             <Enrollment />
             {/* <EnrollmentForm /> */}
-
+            
         </div>
     )
 }

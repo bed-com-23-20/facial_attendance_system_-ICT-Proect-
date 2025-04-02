@@ -278,7 +278,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                             fullWidth
                             type="button"
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             onClick={handleCancel}
                         >
                             Clear and Cancel
