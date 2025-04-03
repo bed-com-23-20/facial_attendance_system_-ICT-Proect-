@@ -6,12 +6,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-04-04T19:30:11.753Z\n"
 "PO-Revision-Date: 2025-04-04T19:30:11.754Z\n"
 =======
 "POT-Creation-Date: 2025-04-03T12:55:06.771Z\n"
 "PO-Revision-Date: 2025-04-03T12:55:06.772Z\n"
 >>>>>>> 7bc8104 (integration with abck end)
+=======
+"POT-Creation-Date: 2025-04-03T12:49:20.474Z\n"
+"PO-Revision-Date: 2025-04-03T12:49:20.475Z\n"
+>>>>>>> 6f903bf (navigetion fixed in dashboard branch)
 
 msgctxt "Application title"
 msgid "__MANIFEST_APP_TITLE"
