@@ -1,9 +1,9 @@
 {
   "type": "app",
-  "name": "facial-attendance",
+  "name": "my-app",
   "version": "1.0.0",
   "description": "",
-  "title": "facial-attendance",
+  "title": "my-app",
   "entryPoints": {
     "app": "index.html"
   }

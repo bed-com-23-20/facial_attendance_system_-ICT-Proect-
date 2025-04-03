@@ -1,4 +1,6 @@
 {
     "ERROR": "ERROR",
-    "Loading...": "Loading..."
+    "Loading...": "Loading...",
+    "Hello Enerst,You are in Dhis2 server.": "Hello Enerst,You are in Dhis2 server.",
+    "Welcome to DHIS2!": "Welcome to DHIS2!"
 }
