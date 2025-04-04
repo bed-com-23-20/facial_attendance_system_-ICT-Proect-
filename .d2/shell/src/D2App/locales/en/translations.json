@@ -1,6 +1,4 @@
 {
-    "ERROR": "ERROR",
-    "Loading...": "Loading...",
-    "Hello Enerst,You are in Dhis2 server.": "Hello Enerst,You are in Dhis2 server.",
-    "Welcome to DHIS2!": "Welcome to DHIS2!"
+    "__MANIFEST_APP_TITLE_Application title": "my-app",
+    "__MANIFEST_APP_DESCRIPTION_Application description": ""
 }
