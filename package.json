@@ -11,25 +11,6 @@
     "deploy": "d2-app-scripts deploy"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@dhis2/cli-app-scripts": "^12.3.0"
-  },
-  "dependencies": {
-    "@dhis2/app-runtime": "^3.14.0",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@mui/lab": "^6.0.0-beta.30",
-    "@mui/material": "^6.4.7",
-    "@mui/x-date-pickers": "^7.27.3",
-    "date-fns": "^2.28.0",
-    "font-awesome": "^4.7.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-=======
     "@dhis2/cli-app-scripts": "^12.3.0",
     "react-router-dom": "^7.3.0"
   },
@@ -38,6 +19,5 @@
     "@dhis2/ui": "^10.3.1",
     "lucide-react": "^0.479.0",
     "react-icons": "^5.5.0"
->>>>>>> ad1d414e9c6568e380a9fdd6fce36031195f7a8c
   }
 }
