@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { useState, useEffect } from 'react';
 // import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/material';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -311,14 +312,21 @@
 
 // export default EnrollmentForm;
 
+=======
+>>>>>>> ade5de1 (fixing enrollment error)
 // Some import from mui/x-date-pickers and mui/x-date-pickers/AdapterDateFns cause some error, so it has commented need to replace them with another implementations
 
 
 
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/material';
+<<<<<<< HEAD
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+=======
+// import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+>>>>>>> ade5de1 (fixing enrollment error)
 
 const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
     const [formData, setFormData] = useState({
@@ -348,10 +356,16 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
     }, [editingEnrollment]);
 
     const handleChange = (e) => {
+<<<<<<< HEAD
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value,
+=======
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+>>>>>>> ade5de1 (fixing enrollment error)
         });
     };
 
@@ -378,8 +392,12 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         console.log('Form Data:', formData);
         onSubmit(formData);
+=======
+        onSubmit(formData); // Pass form data to the parent component
+>>>>>>> ade5de1 (fixing enrollment error)
     };
 
     const handleCancel = () => {
@@ -401,8 +419,15 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
     };
 
     return (
+<<<<<<< HEAD
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
             <h2>Student Enrollment Form</h2>
+=======
+        <Container maxWidth="sm">
+            <Typography variant="h5" gutterBottom>
+                Student Enrollment Form
+            </Typography>
+>>>>>>> ade5de1 (fixing enrollment error)
             <form onSubmit={handleSubmit}>
                 <Typography variant="h6" gutterBottom>
                     Enrollment Details
@@ -609,7 +634,11 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                     </Grid>
                 </Grid>
             </form>
+<<<<<<< HEAD
         </div>
+=======
+        </Container>
+>>>>>>> ade5de1 (fixing enrollment error)
     );
 };
 
