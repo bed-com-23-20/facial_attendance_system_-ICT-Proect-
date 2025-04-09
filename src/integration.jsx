@@ -26,9 +26,15 @@ export const createOrgUnit = async (orgUnitData) => {
 // 2. Get all organization units
 export const getOrgUnits = async () => {
   try {
+<<<<<<< HEAD
     const response = await dhis2.get('/organisationUnits.json?paging=false&fields=id,name');
      
     return response.data;
+=======
+    const response = await dhis2.get('/organisationUnits.json?paging=false&fields=id,name,parent[id,name]');
+    console.log(response.data.organisationUnits)
+    return response.data.organisationUnits;
+>>>>>>> 7bc8104 (integration with abck end)
   } catch (error) {
     console.error('Error fetching organisation units:', error.response?.data || error.message);
     throw error;
@@ -89,6 +95,7 @@ export const getPrograms = async () => {
     throw error;
   }
 };
+<<<<<<< HEAD
 
 // 7. Get all data elements
 export const  Org = () => {
@@ -108,3 +115,5 @@ export const  Org = () => {
   );
 };
 
+=======
+>>>>>>> 7bc8104 (integration with abck end)
