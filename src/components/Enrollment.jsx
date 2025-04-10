@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import EnrollmentForm from './EnrollmentForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { el } from 'date-fns/locale';
+import { Org } from '../integration';
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
     const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
     const [editingEnrollment, setEditingEnrollment] = useState(null); // Track the enrollment being edited
-
     const handleSchoolChange = (event) => {
         setSelectedSchool(event.target.value);
     };
@@ -18,11 +19,15 @@ const Enrollment = () => {
         setShowEnrollmentForm(true);
     };
 
+  
+
+
     const handleCloseForm = () => {
         setShowEnrollmentForm(false);
     };
 
     const handleFormSubmit = (formData) => {
+        // console.log(formData)
         if (editingEnrollment) {
             // Update the existing enrollment
             const updatedEnrollments = enrollments.map((enrollment, i) =>
@@ -35,6 +40,7 @@ const Enrollment = () => {
             setEnrollments([...enrollments, formData]);
         }
         setShowEnrollmentForm(false); // Close the form
+        // console.log('Enrollment data submitted:', enrollments);
     };
 
     const handleEditClick = (enrollment, index) => {
@@ -108,14 +114,16 @@ const Enrollment = () => {
                         <div>
                             <label>
                                 School
-                                <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
+                                {/* <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
                                     <option value="">Select a school</option>
-                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
+                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"]
+                                   { orgUnits.map((school)=> (
                                         <option key={school} value={school}>
                                             {school}
                                         </option>
                                     ))}
-                                </select>
+                                </select> */}
+                                <Org/>
                             </label>
                         </div>
                         <div style={{ marginLeft: '20px' }}>
