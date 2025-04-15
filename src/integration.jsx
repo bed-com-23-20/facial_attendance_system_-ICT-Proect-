@@ -27,56 +27,56 @@ async function getTrackedEntityTypes(baseUrl, accessToken) {
           id: unit.id,
           name: unit.name,
       }));
-      displayEntityList(trackedEntityType)
+      // displayEntityList(trackedEntityType)
   } catch (error) {
       console.error('Error fetching tracked entity types:', error);
       throw error;
   }
 }
-function displayEntityList(items) {
-const outputElement = document.getElementById('output1');
-outputElement.innerHTML = ''; // Clear previous content
+// function displayEntityList(items) {
+// const outputElement = document.getElementById('output1');
+// outputElement.innerHTML = ''; // Clear previous content
 
-const ul = document.createElement('ul');
+// const ul = document.createElement('ul');
 
-items.forEach(item => {
-  const li = document.createElement('li');
-  li.textContent = `${item.name} (${item.id})`;
-  li.style.cursor = 'pointer';
+// items.forEach(item => {
+//   const li = document.createElement('li');
+//   li.textContent = `${item.name} (${item.id})`;
+//   li.style.cursor = 'pointer';
 
-  li.onclick = () => {
-    EntityId=item.id;
-    console.log(`Name: ${item.name}, ID: ${item.id}`);
-  };
+//   li.onclick = () => {
+//     EntityId=item.id;
+//     console.log(`Name: ${item.name}, ID: ${item.id}`);
+//   };
 
-  ul.appendChild(li);
-});
+//   ul.appendChild(li);
+// });
 
-outputElement.appendChild(ul);
-}
+// outputElement.appendChild(ul);
+// }
 
-function displayOrgList(items) {
-const outputElement = document.getElementById('output2');
-outputElement.innerHTML = ''; // Clear previous content
+// function displayOrgList(items) {
+// const outputElement = document.getElementById('output2');
+// outputElement.innerHTML = ''; // Clear previous content
 
-const ul = document.createElement('ul');
+// const ul = document.createElement('ul');
 
-items.forEach(item => {
-  const li = document.createElement('li');
-  li.textContent = `${item.name} (${item.id})`;
-  li.style.cursor = 'pointer';
+// items.forEach(item => {
+//   const li = document.createElement('li');
+//   li.textContent = `${item.name} (${item.id})`;
+//   li.style.cursor = 'pointer';
 
-  li.onclick = () => {
-    ordId=item.id
-    listTrackedEntityInstances(ordId)
-    console.log(`Name: ${item.name}, ID: ${item.id}`);
-  };
+//   li.onclick = () => {
+//     ordId=item.id
+//     listTrackedEntityInstances(ordId)
+//     console.log(`Name: ${item.name}, ID: ${item.id}`);
+//   };
 
-  ul.appendChild(li);
-});
+//   ul.appendChild(li);
+// });
 
-outputElement.appendChild(ul);
-}
+// outputElement.appendChild(ul);
+// }
 
 
 async function fetchOrganisationUnits() {
@@ -94,17 +94,16 @@ async function fetchOrganisationUnits() {
           id: unit.id,
           name: unit.displayName,
       }));
-      displayOrgList(organisationUnits);
+      // displayOrgList(organisationUnits);
   } catch (error) {
       console.error('Error fetching organisation units:', error);
       alert('Failed to fetch organisation units. Check the console for details.');
   }
 }
-getTrackedEntityTypes(BASE_URL,AUTH)
-fetchOrganisationUnits() 
+// getTrackedEntityTypes(BASE_URL,AUTH)
+// fetchOrganisationUnits() 
+
 async function registerStudent() {
-
-
 const form = document.querySelector('form');
 const formData = new FormData(form);
 const payload = {
@@ -155,33 +154,9 @@ console.log(result);
 
 }
 
-// function displayTrackedEntityInstances(items) {
-//   const outputElement = document.getElementById('output1');
-//   outputElement.innerHTML = ''; // Clear previous content
-
-//   const ul = document.createElement('ul');
-
-//   items.forEach(item => {
-//     const li = document.createElement('li');
-//     li.textContent = `${item.name} (${item.id})`;
-//     li.style.cursor = 'pointer';
-
-//     li.onclick = () => {
-//       console.log(`Name: ${item.name}, ID: ${item.id}`);
-//     };
-
-//     ul.appendChild(li);
-//   });
-
-//   outputElement.appendChild(ul);
-// }
-
-
-
 //enrolling a student into particular program
 async function enrollStudent() {
 //  let trackedEntityInstanceId = 'hK2htiuhSvy';
-
 
 const payload = {
   trackedEntityInstance: "j9P9ggylS3u",
@@ -191,6 +166,7 @@ const payload = {
   incidentDate: new Date().toISOString().split('T')[0]
 };
 
+try {
   fetch("http://localhost:8081/api/enrollments", {
 
   method: "POST",
@@ -203,13 +179,18 @@ const payload = {
   .then(async (res) => {
   const data = await res.json();
   console.log("Enrollment response:", data);
-  document.getElementById('output').innerText = `Enrollment response: ${JSON.stringify(result, null, 2)}`;
+  if (res.ok) {
+      console.log("Enrollment successful:", data);
+      document.getElementById('output').innerText = `Enrollment successful: ${JSON.stringify(data, null, 2)}`;
+  } else {
+      console.error("Enrollment failed:", data);
+      document.getElementById('output').innerText = `Enrollment failed: ${JSON.stringify(data, null, 2)}`;
+  }
   })
-  .catch((err) => {
-  console.error("Error:", err);
-  });
-
-
+} 
+catch(error){
+  console.error("Error during enrollment:", error);
+  }
 }
 
 
@@ -251,7 +232,7 @@ try {
   document.getElementById('output').innerText = `Attendance recorded: ${JSON.stringify(result, null, 2)}`;
 } catch (error) {
   console.error("Error recording attendance:", error);
-  document.getElementById('output').innerText = `Error recording attendance: ${error.message}`;
+
 }
 }
 
@@ -268,7 +249,6 @@ const res = await fetch('http://localhost:8081/api/trackedEntities?program=dhQHv
 
 const result = await res.json();
 console.log(result);
-document.getElementById('output').innerText = JSON.stringify(result, null, 2);
 }
 
 // <---- ENDS HERE ---->
