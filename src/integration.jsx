@@ -39,6 +39,7 @@ export const getOrgUnits = async () => {
 export const registerStudent = async (studentData) => {
   try {
     const response = await dhis2.post('/trackedEntityInstances', studentData);
+    
     return response.data;
   } catch (error) {
     console.error('Error registering student:', error.response?.data || error.message);
@@ -91,20 +92,50 @@ export const getPrograms = async () => {
 };
 
 // 7. Get all data elements
-export const  Org = () => {
-  const data = getOrgUnits();
-    
-    const universityNames = data.organisationUnits.map(unit => unit.name);
 
-  return (
-    <div>
-      <h1>University Names</h1>
-      <ul>
-        {universityNames.map((name, index) => (
-          <li key={index}>{name}</li>
-        ))}
-      </ul>
-    </div>
-  );
+// 8. Get all tracked entity types
+export const getTrackedEntityTypes = async () => {
+  try {
+    const response = await dhis2.get('/trackedEntityTypes.json?paging=false&fields=id,name');
+    return response.data.trackedEntityTypes;
+  } catch (error) {
+    console.error('Error fetching tracked entity types:', error.response?.data || error.message);
+    throw error;
+  }
 };
 
+// 9. Get all tracked entity attributes
+export const getTrackedEntityAttributes = async () => {
+  try {
+    const response = await dhis2.get('/trackedEntityAttributes.json?paging=false&fields=id,name');
+    return response.data.trackedEntityAttributes;
+  } catch (error) {
+    console.error('Error fetching tracked entity attributes:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Fetch trackedEntityTypeId by name (e.g., "student")
+export const fetchTrackedEntityTypeId = async (typeName) => {
+  try {
+    const response = await axios.get('/trackedEntityTypes.json?fields=id,displayName');
+    const trackedTypes = response.data.trackedEntityTypes;
+    const type = trackedTypes.find(t => t.displayName.toLowerCase().includes(typeName.toLowerCase()));
+    return type ? type.id : null;
+  } catch (error) {
+    console.error('Error fetching tracked entity type ID:', error);
+    throw error;
+  }
+};
+
+// Fetch all attributes for a specific trackedEntityType ID
+export const fetchTrackedEntityAttributes = async (trackedEntityTypeId) => {
+  try {
+    const response = await axios.get(`/trackedEntityTypes/${trackedEntityTypeId}.json?fields=trackedEntityTypeAttributes[trackedEntityAttribute[id,displayName,valueType,mandatory]]`);
+    console.log(response.data.trackedEntityTypeAttributes)
+    return response.data.trackedEntityTypeAttributes.map(attr => attr.trackedEntityAttribute);
+  } catch (error) {
+    console.error('Error fetching tracked entity attributes:', error);
+    throw error;
+  }
+};

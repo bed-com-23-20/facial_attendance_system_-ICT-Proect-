@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import EnrollmentForm from './EnrollmentForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { el } from 'date-fns/locale';
-import { Org } from '../integration';
+import OrgUnitSelect from './sample'
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
     const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
     const [editingEnrollment, setEditingEnrollment] = useState(null); // Track the enrollment being edited
+   
     const handleSchoolChange = (event) => {
         setSelectedSchool(event.target.value);
     };
@@ -98,6 +98,12 @@ const Enrollment = () => {
                         </button>
 
                         {/* Enrollment Form Component */}
+                        {/* <EnrollmentForm
+                            school={selectedSchool}
+                            onSubmit={handleFormSubmit}
+                            editingEnrollment={editingEnrollment} // Pass the editing enrollment
+                        /> */}
+
                         <EnrollmentForm
                             school={selectedSchool}
                             onSubmit={handleFormSubmit}
@@ -112,19 +118,11 @@ const Enrollment = () => {
                 <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Roboto, sans-serif' }}>
                         <div>
-                            <label>
-                                School
-                                {/* <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
-                                    <option value="">Select a school</option>
-                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"]
-                                   { orgUnits.map((school)=> (
-                                        <option key={school} value={school}>
-                                            {school}
-                                        </option>
-                                    ))}
-                                </select> */}
-                                <Org/>
-                            </label>
+                            {/* <label>
+                                School                   */}
+                 <OrgUnitSelect value={selectedSchool} onChange={handleSchoolChange} />
+                            
+                            {/* </label> */}
                         </div>
                         <div style={{ marginLeft: '20px' }}>
                             <label>
