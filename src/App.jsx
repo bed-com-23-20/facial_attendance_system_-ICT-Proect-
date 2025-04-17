@@ -4,7 +4,7 @@ import React from 'react'
 import classes from './App.module.css'
 import Enrollment from './componets/Enrollment'
 import EnrollmentForm from './componets/EnrollmentForm'
-import '@fortawesome/fontawesome-free/css/all.min.css'
+//import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const query = {
     me: {

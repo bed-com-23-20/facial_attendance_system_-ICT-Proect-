@@ -60,6 +60,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('Form Data:', formData);
         onSubmit(formData); // Pass form data to the parent component
     };
 
