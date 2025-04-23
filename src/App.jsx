@@ -1,31 +1,19 @@
-import { useDataQuery } from '@dhis2/app-runtime'
-import i18n from '@dhis2/d2-i18n'
+
 import React from 'react'
-import classes from './App.module.css'
+import Dashboard from './components/Dashboard'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Enrollment from './components/Enrollment';
 
-const query = {
-    me: {
-        resource: 'me',
-    },
+
+
+const MyApp=()=> {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/Enrollment" element={<Enrollment />}/>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-const MyApp = () => {
-    const { error, loading, data } = useDataQuery(query)
-
-    if (error) {
-        return <span>{i18n.t('ERROR')}</span>
-    }
-
-    if (loading) {
-        return <span>{i18n.t('Loading...')}</span>
-    }
-
-    return (
-        <div className={classes.container}>
-            <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
-            <h3>{i18n.t('Welcome to DHIS2!')}</h3>
-        </div>
-    )
-}
-
-export default MyApp
+export default MyApp            
