@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import EnrollmentForm from './EnrollmentForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+=======
+import React, { useEffect, useState } from 'react';
+import EnrollmentForm from './EnrollmentForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {fetchOrganisationUnits} from '../integration'
+>>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
@@ -9,7 +17,8 @@ const Enrollment = () => {
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
     const [editingEnrollment, setEditingEnrollment] = useState(null); // Track the enrollment being edited
     const [searchQuery, setSearchQuery] = useState(''); // State for search query
-
+    const [ordId, setOrdId] = useState([]); // State for organization unit ID
+    
     const handleSchoolChange = (event) => {
         setSelectedSchool(event.target.value);
     };
@@ -46,6 +55,11 @@ const Enrollment = () => {
     const filteredEnrollments = enrollments.filter((enrollment) =>
         `${enrollment.firstName} ${enrollment.surname} ${enrollment.programOfStudy} ${enrollment.yearOfStudy}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
+  
+    useEffect(() => { 
+         setOrdId( fetchOrganisationUnits())
+         console.log(ordId)
+      },[ordId])
 
     return (
         <div style={{ padding: '10px', position: 'relative' }}>
@@ -115,11 +129,31 @@ const Enrollment = () => {
                                 School
                                 <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
                                     <option value="">Select a school</option>
+<<<<<<< HEAD
                                     {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
                                         <option key={school} value={school}>
                                             {school}
                                         </option>
                                     ))}
+=======
+                                    {/* {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
+                                        <option key={school} value={school}>
+                                            {school}
+                                        </option>
+                                    ))} */}
+                         {/* { ordId.map(item => {
+                        const li = document.createElement('li');
+                        li.textContent = `${item.name} (${item.id})`;
+                        li.style.cursor = 'pointer';
+
+                        li.onclick = () => {
+                        ordId=item.id
+                        // listTrackedEntityInstances(ordId)
+                        console.log(`Name: ${item.name}, ID: ${item.id}`);
+                            };
+                        }
+                          )} */}
+>>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
                                 </select>
                             </label>
                         </div>
@@ -193,6 +227,7 @@ const Enrollment = () => {
     <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
         <thead>
             <tr>
+            <th style={{ border: '1px solid #ccc', padding: '8px' }}>Reg Number</th>
                 <th style={{ border: '1px solid #ccc', padding: '8px' }}>First Name</th>
                 <th style={{ border: '1px solid #ccc', padding: '8px' }}>Surname</th>
                 <th style={{ border: '1px solid #ccc', padding: '8px' }}>School</th>
@@ -209,6 +244,7 @@ const Enrollment = () => {
         <tbody>
             {filteredEnrollments.map((enrollment, index) => (
                 <tr key={index}>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.regNumber}</td>
                     <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.firstName}</td>
                     <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.surname}</td>
                     <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.school}</td>

@@ -8,7 +8,10 @@ msgstr ""
 "POT-Creation-Date: 2025-04-04T19:30:11.753Z\n"
 "PO-Revision-Date: 2025-04-04T19:30:11.754Z\n"
 "POT-Creation-Date: 2025-04-03T12:55:06.771Z\n"
+<<<<<<< HEAD
 "PO-Revision-Date: 2025-04-03T12:55:06.772Z\n"
+=======
+>>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
 "POT-Creation-Date: 2025-04-03T12:49:20.474Z\n"
 "PO-Revision-Date: 2025-04-03T12:49:20.475Z\n"
 "POT-Creation-Date: 2025-04-17T10:57:50.163Z\n"
@@ -16,7 +19,10 @@ msgstr ""
 msgctxt "Application title"
 msgid "__MANIFEST_APP_TITLE"
 msgstr "my-app"
+<<<<<<< HEAD
 
+=======
+>>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
 msgctxt "Application description"
 msgid "__MANIFEST_APP_DESCRIPTION"
 msgstr ""
