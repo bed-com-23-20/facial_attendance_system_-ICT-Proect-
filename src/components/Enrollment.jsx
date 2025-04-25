@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import EnrollmentForm from './EnrollmentForm';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
-=======
 import React, { useEffect, useState } from 'react';
 import EnrollmentForm from './EnrollmentForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import {fetchOrganisationUnits} from '../integration'
->>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
@@ -129,13 +122,6 @@ const Enrollment = () => {
                                 School
                                 <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
                                     <option value="">Select a school</option>
-<<<<<<< HEAD
-                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
-                                        <option key={school} value={school}>
-                                            {school}
-                                        </option>
-                                    ))}
-=======
                                     {/* {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
                                         <option key={school} value={school}>
                                             {school}
@@ -153,7 +139,6 @@ const Enrollment = () => {
                             };
                         }
                           )} */}
->>>>>>> d39a4648e7554af450d81a2780014afc7db66adc
                                 </select>
                             </label>
                         </div>
