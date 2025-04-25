@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { recordAttendance, registerStudent } from '../integration';
 
 const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
     const [formData, setFormData] = useState({
@@ -60,12 +61,14 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
+        // console.log('Form Data:', formData);
+        registerStudent(formData); // Call the function to record attendance
         onSubmit(formData); // Pass form data to the parent component
     };
 
     const handleCancel = () => {
         setFormData({
+            regNumber: '',
             school: school || '',
             academicYear: '',
             yearOfStudy: '',
@@ -91,11 +94,13 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                 <Typography variant="h6" gutterBottom>
                     Enrollment Details
                 </Typography>
+            
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
                             label="School"
+                            id='school'
                             name="school"
                             value={formData.school}
                             onChange={handleChange}
@@ -106,8 +111,21 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
+                            label="Registration Number"
+                            id='regNumber'
+                            name="regNumber"
+                            value={formData.regNumber}
+                            onChange={handleChange}
+
+                        />
+                    </Grid>
+                    
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
                             select
                             label="Academic Year"
+                            id='academicYear'
                             name="academicYear"
                             value={formData.academicYear}
                             onChange={handleChange}
@@ -122,6 +140,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                             fullWidth
                             select
                             label="Year of Study"
+                            id='yearOfStudy'
                             name="yearOfStudy"
                             value={formData.yearOfStudy}
                             onChange={handleChange}
@@ -138,6 +157,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                             fullWidth
                             select
                             label="Program of Study"
+                            id='programOfStudy'
                             name="programOfStudy"
                             value={formData.programOfStudy}
                             onChange={handleChange}
@@ -153,6 +173,8 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Enrollment Date"
+                                id='enrollmentDate'
+                                name="enrollmentDate"
                                 value={formData.enrollmentDate}
                                 onChange={(date) => handleDateChange('enrollmentDate', date)}
                                 renderInput={(params) => <TextField {...params} fullWidth />}
@@ -216,6 +238,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         <TextField
                             fullWidth
                             label="First Name"
+                            id='firstName'
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleChange}
@@ -226,6 +249,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                             fullWidth
                             label="Surname"
                             name="surname"
+                            id='surname'
                             value={formData.surname}
                             onChange={handleChange}
                         />
@@ -236,6 +260,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                             select
                             label="Gender"
                             name="gender"
+                            id='gender'
                             value={formData.gender}
                             onChange={handleChange}
                         >
@@ -248,6 +273,8 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Date of Birth"
+                                id='dob'
+                                name="dateOfBirth"
                                 value={formData.dateOfBirth}
                                 onChange={(date) => handleDateChange('dateOfBirth', date)}
                                 renderInput={(params) => <TextField fullWidth {...params} />}
@@ -258,6 +285,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         <TextField
                             fullWidth
                             label="Nationality"
+                            id='nationality'
                             name="nationality"
                             value={formData.nationality}
                             onChange={handleChange}
@@ -267,6 +295,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         <TextField
                             fullWidth
                             label="Guardian's Name"
+                            id='guardian'
                             name="guardianName"
                             value={formData.guardianName}
                             onChange={handleChange}

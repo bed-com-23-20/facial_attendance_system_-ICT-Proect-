@@ -7,7 +7,7 @@ let EntityId='';
 
 
 // all required function for enrollment functionality
-async function getTrackedEntityTypes(baseUrl, accessToken) {
+export async function getTrackedEntityTypes(baseUrl, accessToken) {
   const url = `${baseUrl}/api/trackedEntityTypes.json?fields=id,name&paging=false`;
 
   try {
@@ -27,7 +27,7 @@ async function getTrackedEntityTypes(baseUrl, accessToken) {
           id: unit.id,
           name: unit.name,
       }));
-      // displayEntityList(trackedEntityType)
+      return trackedEntityType
   } catch (error) {
       console.error('Error fetching tracked entity types:', error);
       throw error;
@@ -79,7 +79,7 @@ async function getTrackedEntityTypes(baseUrl, accessToken) {
 // }
 
 
-async function fetchOrganisationUnits() {
+export async function fetchOrganisationUnits() {
   const url = 'http://localhost:8081/api/organisationUnits.json';
   const headers = new Headers();
   headers.append('Authorization', 'Basic ' + btoa('admin:district'));
@@ -94,7 +94,7 @@ async function fetchOrganisationUnits() {
           id: unit.id,
           name: unit.displayName,
       }));
-      // displayOrgList(organisationUnits);
+      return organisationUnits;
   } catch (error) {
       console.error('Error fetching organisation units:', error);
       alert('Failed to fetch organisation units. Check the console for details.');
@@ -103,18 +103,26 @@ async function fetchOrganisationUnits() {
 // getTrackedEntityTypes(BASE_URL,AUTH)
 // fetchOrganisationUnits() 
 
-async function registerStudent() {
-const form = document.querySelector('form');
+export async function registerStudent(form) {
+
 const formData = new FormData(form);
 const payload = {
   trackedEntityType: EntityId,
   orgUnit: ordId,
   attributes :[
-{ attribute: "EgbkEerDZET", value: formData.get('id') },
-{ attribute: "MPpBF8ba0il", value: formData.get('fname') },
-{ attribute: "wO9nqCGAAC1", value: formData.get('lname') },
-{ attribute: "SxF7h6hwEo1", value: formData.get('gender') },
-{ attribute: "qlF7eQUwqsK", value: formData.get('date') }
+{ attribute: "ct4z0T1F36i", value: formData.get('school') },
+{ attribute: "aqBmqM1onC7", value: formData.get('academicYear') },
+{ attribute: "EHTfWCHTYCo", value: formData.get('yearOfStudy') },
+{ attribute: "ADiCfoRxZI2", value: formData.get('programOfStudy') },
+{ attribute: "ixauprApakv", value: formData.get('enrollmentDate') },
+{ attribute: "ED1V1bFMtb1", value: formData.get('profilePictureInput') },
+{ attribute: "nlAAn9uTTie", value: formData.get('firstName') },
+{ attribute: "KHFDJkJgUvj", value: formData.get('surname') },
+{ attribute: "Cg56JK84NAd", value: formData.get('gender') },
+{ attribute: "EAPD9u4neIp", value: formData.get('dob') },
+{ attribute: "hhyS9WANpuz", value: formData.get('Nationality') },
+{ attribute: "pzZJIX2yMEZ", value: formData.get('guardian') },
+{attribute: "ofiRHvsg4Mt", value: formData.get('regNumber') },
 ]
 };
 try{
@@ -140,7 +148,7 @@ console.log(error)
 
 
 //<---- All functions related to enroment functionality --->
-async function listTrackedEntityInstances(orgUnit) {
+export async function listTrackedEntityInstances(orgUnit) {
 const res = await fetch(`${BASE_URL}/api/trackedEntityInstances?ou=${orgUnit}`, {
   method: 'GET',
   headers: {
@@ -155,7 +163,7 @@ console.log(result);
 }
 
 //enrolling a student into particular program
-async function enrollStudent() {
+export async function enrollStudent() {
 //  let trackedEntityInstanceId = 'hK2htiuhSvy';
 
 const payload = {
@@ -195,7 +203,7 @@ catch(error){
 
 
 // registrating a student as attended a test
-async function recordAttendance() {
+export async function recordAttendance() {
 // if (!trackedEntityInstanceId) return alert('Register a student first!');
 
 const payload = {
@@ -238,7 +246,7 @@ try {
 
 
 // geting all tracked entities
-async function fetchTrackedEntities() {
+export async function fetchTrackedEntities() {
 const res = await fetch('http://localhost:8081/api/trackedEntities?program=dhQHvVG0FAf', {
   method: 'GET',
   headers: {

@@ -1,9 +1,8 @@
 
 import React from 'react'
-import classes from './App.module.css'
-import Enrollment from './componets/Enrollment'
-import EnrollmentForm from './componets/EnrollmentForm'
-//import '@fortawesome/fontawesome-free/css/all.min.css'
+import Enrollment from './components/Enrollment'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Dashboard from './components/Dashboard'
 
 
 
@@ -13,7 +12,6 @@ const MyApp=()=> {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/Enrollment" element={<Enrollment />}/>
-        <Route path="/data" element={<OrgUnitList/>}/>
       </Routes>
     </BrowserRouter>
   );
