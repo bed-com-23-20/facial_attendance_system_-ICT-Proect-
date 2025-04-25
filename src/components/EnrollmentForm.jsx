@@ -1,11 +1,7 @@
-// Some import from mui/x-date-pickers and mui/x-date-pickers/AdapterDateFns cause some error, so it has commented need to replace them with another implementations
-
-
-
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Button, Typography, Container, Grid } from '@mui/material';
-// import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
     const [formData, setFormData] = useState({
@@ -64,6 +60,7 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('Form Data:', formData);
         onSubmit(formData); // Pass form data to the parent component
     };
 
@@ -153,15 +150,14 @@ const EnrollmentForm = ({ school, onSubmit, editingEnrollment }) => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12}>
-                        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <input
-                                type="date"
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
                                 label="Enrollment Date"
                                 value={formData.enrollmentDate}
                                 onChange={(date) => handleDateChange('enrollmentDate', date)}
                                 renderInput={(params) => <TextField {...params} fullWidth />}
                             />
-                        </LocalizationProvider> */}
+                        </LocalizationProvider>
                     </Grid>
                 </Grid>
                 <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>

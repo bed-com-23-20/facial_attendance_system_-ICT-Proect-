@@ -43,21 +43,22 @@ const Dashboard = () => {
             {isSidebarOpen ? <ArrowLeft /> : <ArrowRight />}
         </button>
         <div className="grid-container">
-          {[
-            { label: "Enrollment", icon: Users, path: "/enrollment" },
-            { label: "Attendance", icon: Clock, path: "/attendance" },
-            { label: "Performance", icon: FileText, path: "/performance" },
-            { label: "Final result", icon: GraduationCap, path: "/final-result" },
-            { label: "Transfer", icon: Repeat, path: "/transfer" }
-          ].map(({ label, icon: Icon, path }) => (
-            <div key={label} className="card">
-              <Icon className="card-icon" size={35} />
-              <div className="divider"></div>
-              <span className="card-label">{label}</span>
-              <div className="divider"></div>
-              <Link className="link-to" to={label}> Go to</Link>
-            </div>
-          ))}
+        {[
+          { label: "Enrollment", icon: Users, path: "/enrollment" },
+          { label: "Attendance", icon: Clock, path: "/attendance" },
+          { label: "Performance", icon: FileText, path: "/performance" },
+          { label: "Final result", icon: GraduationCap, path: "/final-result" },
+          { label: "Transfer", icon: Repeat, path: "/transfer" }
+        ].map(({ label, icon: Icon, path }) => (
+          <div key={label} className="card">
+            <Icon className="card-icon" size={35} />
+            <div className="divider"></div>
+            <span className="card-label">{label}</span>
+            <div className="divider"></div>
+            <Link className="link-to" to={path}>Go to</Link>
+          </div>
+        ))}
+
         </div>
       </div>
       </div>
