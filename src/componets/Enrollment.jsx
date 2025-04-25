@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EnrollmentForm from './EnrollmentForm';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
     const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
     const [editingEnrollment, setEditingEnrollment] = useState(null); // Track the enrollment being edited
-   
+    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+
     const handleSchoolChange = (event) => {
         setSelectedSchool(event.target.value);
     };
@@ -18,15 +19,11 @@ const Enrollment = () => {
         setShowEnrollmentForm(true);
     };
 
-  
-
-
     const handleCloseForm = () => {
         setShowEnrollmentForm(false);
     };
 
     const handleFormSubmit = (formData) => {
-        // console.log(formData)
         if (editingEnrollment) {
             // Update the existing enrollment
             const updatedEnrollments = enrollments.map((enrollment, i) =>
@@ -39,13 +36,16 @@ const Enrollment = () => {
             setEnrollments([...enrollments, formData]);
         }
         setShowEnrollmentForm(false); // Close the form
-        // console.log('Enrollment data submitted:', enrollments);
     };
 
     const handleEditClick = (enrollment, index) => {
         setEditingEnrollment({ ...enrollment, index }); // Store the enrollment and its index
         setShowEnrollmentForm(true); // Open the form
     };
+
+    const filteredEnrollments = enrollments.filter((enrollment) =>
+        `${enrollment.firstName} ${enrollment.surname} ${enrollment.programOfStudy} ${enrollment.yearOfStudy}`.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div style={{ padding: '10px', position: 'relative' }}>
@@ -97,12 +97,6 @@ const Enrollment = () => {
                         </button>
 
                         {/* Enrollment Form Component */}
-                        {/* <EnrollmentForm
-                            school={selectedSchool}
-                            onSubmit={handleFormSubmit}
-                            editingEnrollment={editingEnrollment} // Pass the editing enrollment
-                        /> */}
-
                         <EnrollmentForm
                             school={selectedSchool}
                             onSubmit={handleFormSubmit}
@@ -117,11 +111,17 @@ const Enrollment = () => {
                 <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Roboto, sans-serif' }}>
                         <div>
-                            {/* <label>
-                                School                   */}
-                 <OrgUnitSelect value={selectedSchool} onChange={handleSchoolChange} />
-                            
-                            {/* </label> */}
+                            <label>
+                                School
+                                <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
+                                    <option value="">Select a school</option>
+                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
+                                        <option key={school} value={school}>
+                                            {school}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
                         </div>
                         <div style={{ marginLeft: '20px' }}>
                             <label>
@@ -167,92 +167,114 @@ const Enrollment = () => {
                             <input
                                 type="text"
                                 placeholder="Search Student"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc', paddingLeft: '30px' }}
                             />
-                            {/* <FontAwesomeIcon
+                            <FontAwesomeIcon
                                 icon={faSearch}
                                 style={{ position: 'absolute', left: '10px', color: '#ccc' }}
-                            /> */}
+                            />
                         </div>
 
                         {/* Buttons */}
                         <button style={{ padding: '5px 10px' }} onClick={handleEnrollStudentClick}>
-                            {/* <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} /> */}
+                            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
                             Enroll Student
                         </button>
                         <button style={{ padding: '5px 10px' }}>
-                            {/* <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} /> */}
+                            <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} />
                             Download PDF
                         </button>
                     </div>
 
                     {/* Display Enrollments in a Table */}
-                    {enrollments.length > 0 && (
-                        <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
-                            <thead>
-                                <tr>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>First Name</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Surname</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>School</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Gender</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Date of Birth</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Nationality</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Guardian's Name</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Profile Picture</th>
-                                    <th style={{ border: '1px solid #ccc', padding: '8px' }}>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {enrollments.map((enrollment, index) => (
-                                    <tr key={index}>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.firstName}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.surname}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.school}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.gender}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.dateOfBirth?.toLocaleDateString()}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.nationality}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.guardianName}</td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'center' }}>
-                                            <img
-                                                src={enrollment.profilePicture || 'https://via.placeholder.com/50'}
-                                                alt="Profile"
-                                                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                                            />
-                                        </td>
-                                        <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'center' }}>
-                                            <button
-                                                style={{
-                                                    backgroundColor: 'transparent',
-                                                    border: 'none',
-                                                    cursor: 'pointer',
-                                                    marginRight: '10px',
-                                                }}
-                                                onClick={() => handleEditClick(enrollment, index)} // Edit button handler
-                                            >
-                                                {/* <FontAwesomeIcon icon={faPen} style={{ color: '#4caf50' }} /> */}
-                                            </button>
-                                            <button
-                                                style={{
-                                                    backgroundColor: 'transparent',
-                                                    border: 'none',
-                                                    cursor: 'pointer',
-                                                }}
-                                                onClick={() => {
-                                                    const confirmDelete = window.confirm('Are you sure you want to delete this enrollment?');
-                                                    if (confirmDelete) {
-                                                        const updatedEnrollments = enrollments.filter((_, i) => i !== index);
-                                                        setEnrollments(updatedEnrollments);
-                                                    }
-                                                }}
-                                            >
-                                                {/* <FontAwesomeIcon icon={faTrash} style={{ color: '#f44336' }} /> */}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
+                    {filteredEnrollments.length > 0 ? (
+    <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
+        <thead>
+            <tr>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>First Name</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Surname</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>School</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Program Of Study</th>
+                {/* <th style={{ border: '1px solid #ccc', padding: '8px' }}>Date of Birth</th> */}
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Year of Study</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Nationality</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Gender</th>
+                {/* <th style={{ border: '1px solid #ccc', padding: '8px' }}>Guardian's Name</th> */}
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Profile Picture</th>
+                <th style={{ border: '1px solid #ccc', padding: '8px' }}>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {filteredEnrollments.map((enrollment, index) => (
+                <tr key={index}>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.firstName}</td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.surname}</td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.school}</td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.programOfStudy}</td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.yearOfStudy}</td>
+                    {/* <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.dateOfBirth?.toLocaleDateString()}</td> */}
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.nationality}</td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.gender}</td>
+                    {/* <td style={{ border: '1px solid #ccc', padding: '8px' }}>{enrollment.guardianName}</td> */}
+                    <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'center' }}>
+                        <img
+                            src={enrollment.profilePicture || 'https://via.placeholder.com/50'}
+                            alt="Profile"
+                            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                        />
+                    </td>
+                    <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'center' }}>
+                        <button
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                                marginRight: '10px',
+                            }}
+                            onClick={() => handleEditClick(enrollment, index)} // Edit button handler
+                        >
+                            <FontAwesomeIcon icon={faPen} style={{ color: '#4caf50' }} />
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => {
+                                const confirmDelete = window.confirm('Are you sure you want to delete this enrollment?');
+                                if (confirmDelete) {
+                                    const updatedEnrollments = enrollments.filter((_, i) => i !== index);
+                                    setEnrollments(updatedEnrollments);
+                                }
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faTrash} style={{ color: '#f44336' }} />
+                        </button>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+) : (
+    searchQuery && (
+        <div
+        style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            marginTop: '40px',
+            fontSize: '1.3rem',
+        }}
+    >
+        No Student or any Information match your search.
+    </div>
+)
+
+)}
+              
                 </div>
             ) : (
                 <div
