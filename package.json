@@ -24,6 +24,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+<<<<<<< HEAD
     "@mui/icons-material": "5",
     "@mui/material": "5",
     "@mui/system": "5",
@@ -31,6 +32,12 @@
     "@mui/x-date-pickers": "5",
     "axios": "^1.8.4",
     "date-fns": "2",
+=======
+    "@mui/material": "^7.0.1",
+    "@mui/system": "^7.0.1",
+    "@mui/x-date-pickers": "^7.28.3",
+    "axios": "^1.8.4",
+>>>>>>> 7bc8104 (integration with abck end)
     "lucide-react": "^0.479.0",
     "react-datepicker": "^8.3.0",
     "react-icons": "^5.5.0"

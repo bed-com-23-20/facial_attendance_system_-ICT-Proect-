@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import EnrollmentForm from './EnrollmentForm';
+<<<<<<< HEAD
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
-import OrgUnitSelect from './sample'
+import { el } from 'date-fns/locale';
+import { Org } from '../integration';
+=======
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+>>>>>>> 7bc8104 (integration with abck end)
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
@@ -170,19 +176,19 @@ const Enrollment = () => {
                                 placeholder="Search Student"
                                 style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc', paddingLeft: '30px' }}
                             />
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={faSearch}
                                 style={{ position: 'absolute', left: '10px', color: '#ccc' }}
-                            />
+                            /> */}
                         </div>
 
                         {/* Buttons */}
                         <button style={{ padding: '5px 10px' }} onClick={handleEnrollStudentClick}>
-                            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
+                            {/* <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} /> */}
                             Enroll Student
                         </button>
                         <button style={{ padding: '5px 10px' }}>
-                            <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} />
+                            {/* <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} /> */}
                             Download PDF
                         </button>
                     </div>
@@ -230,7 +236,7 @@ const Enrollment = () => {
                                                 }}
                                                 onClick={() => handleEditClick(enrollment, index)} // Edit button handler
                                             >
-                                                <FontAwesomeIcon icon={faPen} style={{ color: '#4caf50' }} />
+                                                {/* <FontAwesomeIcon icon={faPen} style={{ color: '#4caf50' }} /> */}
                                             </button>
                                             <button
                                                 style={{
@@ -246,7 +252,7 @@ const Enrollment = () => {
                                                     }
                                                 }}
                                             >
-                                                <FontAwesomeIcon icon={faTrash} style={{ color: '#f44336' }} />
+                                                {/* <FontAwesomeIcon icon={faTrash} style={{ color: '#f44336' }} /> */}
                                             </button>
                                         </td>
                                     </tr>

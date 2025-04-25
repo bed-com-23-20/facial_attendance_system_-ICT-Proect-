@@ -1,141 +1,254 @@
-import axios from 'axios';
+// <---- STARTS HERE ---->
 
-// Setup axios instance for DHIS2
-const dhis2 = axios.create({
-  baseURL: 'http://localhost:8081/api',
-  auth: {
-    username: 'admin',
-    password: 'district'
-  },
+const BASE_URL = 'http://localhost:8081';
+const AUTH = 'Basic ' + btoa('admin:district'); // Change credentials if needed
+let ordId ='';
+let EntityId='';
+
+
+// all required function for enrollment functionality
+async function getTrackedEntityTypes(baseUrl, accessToken) {
+  const url = `${baseUrl}/api/trackedEntityTypes.json?fields=id,name&paging=false`;
+
+  try {
+      const response = await fetch(url, {
+          headers: {
+              Authorization: accessToken,
+              'Content-Type': 'application/json',
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error(`Failed to fetch tracked entity types: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const trackedEntityType = data.trackedEntityTypes.map(unit => ({
+          id: unit.id,
+          name: unit.name,
+      }));
+      // displayEntityList(trackedEntityType)
+  } catch (error) {
+      console.error('Error fetching tracked entity types:', error);
+      throw error;
+  }
+}
+// function displayEntityList(items) {
+// const outputElement = document.getElementById('output1');
+// outputElement.innerHTML = ''; // Clear previous content
+
+// const ul = document.createElement('ul');
+
+// items.forEach(item => {
+//   const li = document.createElement('li');
+//   li.textContent = `${item.name} (${item.id})`;
+//   li.style.cursor = 'pointer';
+
+//   li.onclick = () => {
+//     EntityId=item.id;
+//     console.log(`Name: ${item.name}, ID: ${item.id}`);
+//   };
+
+//   ul.appendChild(li);
+// });
+
+// outputElement.appendChild(ul);
+// }
+
+// function displayOrgList(items) {
+// const outputElement = document.getElementById('output2');
+// outputElement.innerHTML = ''; // Clear previous content
+
+// const ul = document.createElement('ul');
+
+// items.forEach(item => {
+//   const li = document.createElement('li');
+//   li.textContent = `${item.name} (${item.id})`;
+//   li.style.cursor = 'pointer';
+
+//   li.onclick = () => {
+//     ordId=item.id
+//     listTrackedEntityInstances(ordId)
+//     console.log(`Name: ${item.name}, ID: ${item.id}`);
+//   };
+
+//   ul.appendChild(li);
+// });
+
+// outputElement.appendChild(ul);
+// }
+
+
+async function fetchOrganisationUnits() {
+  const url = 'http://localhost:8081/api/organisationUnits.json';
+  const headers = new Headers();
+  headers.append('Authorization', 'Basic ' + btoa('admin:district'));
+
+  try {
+      const response = await fetch(url, { headers: headers });
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const organisationUnits = data.organisationUnits.map(unit => ({
+          id: unit.id,
+          name: unit.displayName,
+      }));
+      // displayOrgList(organisationUnits);
+  } catch (error) {
+      console.error('Error fetching organisation units:', error);
+      alert('Failed to fetch organisation units. Check the console for details.');
+  }
+}
+// getTrackedEntityTypes(BASE_URL,AUTH)
+// fetchOrganisationUnits() 
+
+async function registerStudent() {
+const form = document.querySelector('form');
+const formData = new FormData(form);
+const payload = {
+  trackedEntityType: EntityId,
+  orgUnit: ordId,
+  attributes :[
+{ attribute: "EgbkEerDZET", value: formData.get('id') },
+{ attribute: "MPpBF8ba0il", value: formData.get('fname') },
+{ attribute: "wO9nqCGAAC1", value: formData.get('lname') },
+{ attribute: "SxF7h6hwEo1", value: formData.get('gender') },
+{ attribute: "qlF7eQUwqsK", value: formData.get('date') }
+]
+};
+try{
+const res = await fetch(`http://localhost:8081/api/trackedEntityInstances
+`, {
+  method: 'POST',
   headers: {
+    'Authorization': AUTH,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(payload)
+});
+
+const result = await res.json();
+console.log(result);
+}
+catch(error){
+console.log(error)
+
+}
+}
+// <---- ENDS HERE ---->
+
+
+//<---- All functions related to enroment functionality --->
+async function listTrackedEntityInstances(orgUnit) {
+const res = await fetch(`${BASE_URL}/api/trackedEntityInstances?ou=${orgUnit}`, {
+  method: 'GET',
+  headers: {
+    'Authorization': AUTH,
     'Content-Type': 'application/json'
   }
 });
 
-// 1. Save an organization unit
-export const createOrgUnit = async (orgUnitData) => {
-  try {
-    const response = await dhis2.post('/organisationUnits', orgUnitData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating organisation unit:', error.response?.data || error.message);
-    throw error;
-  }
+const result = await res.json();
+console.log(result);
+
+}
+
+//enrolling a student into particular program
+async function enrollStudent() {
+//  let trackedEntityInstanceId = 'hK2htiuhSvy';
+
+const payload = {
+  trackedEntityInstance: "j9P9ggylS3u",
+  program: "dhQHvVG0FAf",
+  orgUnit: "JrmBKF0gLkL",
+  enrollmentDate: new Date().toISOString().split('T')[0],
+  incidentDate: new Date().toISOString().split('T')[0]
 };
 
-// 2. Get all organization units
-export const getOrgUnits = async () => {
-  try {
-    const response = await dhis2.get('/organisationUnits.json?paging=false&fields=id,name');
-     
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching organisation units:', error.response?.data || error.message);
-    throw error;
+try {
+  fetch("http://localhost:8081/api/enrollments", {
+
+  method: "POST",
+  headers: {
+      "Content-Type": "application/json",
+      Authorization: "Basic " + btoa("admin:district"),
+  },
+  body: JSON.stringify(payload),
+  })
+  .then(async (res) => {
+  const data = await res.json();
+  console.log("Enrollment response:", data);
+  if (res.ok) {
+      console.log("Enrollment successful:", data);
+      document.getElementById('output').innerText = `Enrollment successful: ${JSON.stringify(data, null, 2)}`;
+  } else {
+      console.error("Enrollment failed:", data);
+      document.getElementById('output').innerText = `Enrollment failed: ${JSON.stringify(data, null, 2)}`;
   }
+  })
+} 
+catch(error){
+  console.error("Error during enrollment:", error);
+  }
+}
+
+
+// registrating a student as attended a test
+async function recordAttendance() {
+// if (!trackedEntityInstanceId) return alert('Register a student first!');
+
+const payload = {
+  program: "dhQHvVG0FAf",
+  orgUnit: "JrmBKF0gLkL",
+  trackedEntityInstance: "j9P9ggylS3u",
+  programStage: "pvQDWMhS6sU",
+  occurredAt: new Date().toISOString(),
+  eventDate: new Date().toISOString(),
+  dataValues: [
+    {
+      dataElement: "NRXM4M9Bkas", // Example data element for attendance status
+      value: "Yes" // Marking attendance as "Yes"
+    },
+    {
+      dataElement: "zEwd7PwSHV9", // Example data element for event date
+      value: new Date().toISOString() // ISO format for date and time
+    }
+  ]
 };
 
-// 3. Register a student to a tracker program
-export const registerStudent = async (studentData) => {
-  try {
-    const response = await dhis2.post('/trackedEntityInstances', studentData);
-    
-    return response.data;
-  } catch (error) {
-    console.error('Error registering student:', error.response?.data || error.message);
-    throw error;
-  }
-};
+try {
+  const res = await fetch('http://localhost:8081/api/events', {
+    method: 'POST',
+    headers: {
+      'Authorization': AUTH,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
 
-// 4. Get registered entities from a program
-export const getEntities = async () => {
-  // const programID =getPrograms()
-  // const orgUnitID = getOrgUnits()
-  try {
-    const response = await dhis2.get(`/trackedEntityInstances.json`, {
-      params: {
-        program: "qxZBosiOpz0",
-        ou: "kvXAhslMWmf",
-        ouMode: 'ACCESSIBLE',  
-        paging: false
-      }
-    });
-    console.log(response.data.trackedEntityInstances)
-    return response.data.trackedEntityInstances;
-  } catch (error) {
-    console.error('Error fetching tracked entities:', error.response?.data || error.message);
-    throw error;
-  }
-};
+  const result = await res.json();
+  console.log(result);
+  document.getElementById('output').innerText = `Attendance recorded: ${JSON.stringify(result, null, 2)}`;
+} catch (error) {
+  console.error("Error recording attendance:", error);
 
-// 5. Create a tracker program
-export const createTrackerProgram = async (programData) => {
-  try {
-    const response = await dhis2.post('/programs', programData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating tracker program:', error.response?.data || error.message);
-    throw error;
-  }
-};
+}
+}
 
-// 6. Get all registered programs
-export const getPrograms = async () => {
-  try {
-    const response = await dhis2.get('/programs.json?paging=false&fields=id,name,programType');
-    console.log(response.data.programs)
-    return response.data.programs;
-  } catch (error) {
-    console.error('Error fetching programs:', error.response?.data || error.message);
-    throw error;
-  }
-};
 
-// 7. Get all data elements
-
-// 8. Get all tracked entity types
-export const getTrackedEntityTypes = async () => {
-  try {
-    const response = await dhis2.get('/trackedEntityTypes.json?paging=false&fields=id,name');
-    return response.data.trackedEntityTypes;
-  } catch (error) {
-    console.error('Error fetching tracked entity types:', error.response?.data || error.message);
-    throw error;
+// geting all tracked entities
+async function fetchTrackedEntities() {
+const res = await fetch('http://localhost:8081/api/trackedEntities?program=dhQHvVG0FAf', {
+  method: 'GET',
+  headers: {
+    'Authorization': AUTH,
+    'Content-Type': 'application/json'
   }
-};
+});
 
-// 9. Get all tracked entity attributes
-export const getTrackedEntityAttributes = async () => {
-  try {
-    const response = await dhis2.get('/trackedEntityAttributes.json?paging=false&fields=id,name');
-    return response.data.trackedEntityAttributes;
-  } catch (error) {
-    console.error('Error fetching tracked entity attributes:', error.response?.data || error.message);
-    throw error;
-  }
-};
+const result = await res.json();
+console.log(result);
+}
 
-// Fetch trackedEntityTypeId by name (e.g., "student")
-export const fetchTrackedEntityTypeId = async (typeName) => {
-  try {
-    const response = await axios.get('/trackedEntityTypes.json?fields=id,displayName');
-    const trackedTypes = response.data.trackedEntityTypes;
-    const type = trackedTypes.find(t => t.displayName.toLowerCase().includes(typeName.toLowerCase()));
-    return type ? type.id : null;
-  } catch (error) {
-    console.error('Error fetching tracked entity type ID:', error);
-    throw error;
-  }
-};
-
-// Fetch all attributes for a specific trackedEntityType ID
-export const fetchTrackedEntityAttributes = async (trackedEntityTypeId) => {
-  try {
-    const response = await axios.get(`/trackedEntityTypes/${trackedEntityTypeId}.json?fields=trackedEntityTypeAttributes[trackedEntityAttribute[id,displayName,valueType,mandatory]]`);
-    console.log(response.data.trackedEntityTypeAttributes)
-    return response.data.trackedEntityTypeAttributes.map(attr => attr.trackedEntityAttribute);
-  } catch (error) {
-    console.error('Error fetching tracked entity attributes:', error);
-    throw error;
-  }
-};
+// <---- ENDS HERE ---->
