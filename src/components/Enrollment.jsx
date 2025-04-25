@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EnrollmentForm from './EnrollmentForm';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
@@ -19,15 +19,11 @@ const Enrollment = () => {
         setShowEnrollmentForm(true);
     };
 
-  
-
-
     const handleCloseForm = () => {
         setShowEnrollmentForm(false);
     };
 
     const handleFormSubmit = (formData) => {
-        // console.log(formData)
         if (editingEnrollment) {
             // Update the existing enrollment
             const updatedEnrollments = enrollments.map((enrollment, i) =>
@@ -40,7 +36,6 @@ const Enrollment = () => {
             setEnrollments([...enrollments, formData]);
         }
         setShowEnrollmentForm(false); // Close the form
-        // console.log('Enrollment data submitted:', enrollments);
     };
 
     const handleEditClick = (enrollment, index) => {
@@ -102,12 +97,6 @@ const Enrollment = () => {
                         </button>
 
                         {/* Enrollment Form Component */}
-                        {/* <EnrollmentForm
-                            school={selectedSchool}
-                            onSubmit={handleFormSubmit}
-                            editingEnrollment={editingEnrollment} // Pass the editing enrollment
-                        /> */}
-
                         <EnrollmentForm
                             school={selectedSchool}
                             onSubmit={handleFormSubmit}
@@ -122,11 +111,17 @@ const Enrollment = () => {
                 <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Roboto, sans-serif' }}>
                         <div>
-                            {/* <label>
-                                School                   */}
-                 <OrgUnitSelect value={selectedSchool} onChange={handleSchoolChange} />
-                            
-                            {/* </label> */}
+                            <label>
+                                School
+                                <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
+                                    <option value="">Select a school</option>
+                                    {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
+                                        <option key={school} value={school}>
+                                            {school}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
                         </div>
                         <div style={{ marginLeft: '20px' }}>
                             <label>
@@ -176,19 +171,19 @@ const Enrollment = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc', paddingLeft: '30px' }}
                             />
-                            {/* <FontAwesomeIcon
+                            <FontAwesomeIcon
                                 icon={faSearch}
                                 style={{ position: 'absolute', left: '10px', color: '#ccc' }}
-                            /> */}
+                            />
                         </div>
 
                         {/* Buttons */}
                         <button style={{ padding: '5px 10px' }} onClick={handleEnrollStudentClick}>
-                            {/* <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} /> */}
+                            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
                             Enroll Student
                         </button>
                         <button style={{ padding: '5px 10px' }}>
-                            {/* <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} /> */}
+                            <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} />
                             Download PDF
                         </button>
                     </div>
