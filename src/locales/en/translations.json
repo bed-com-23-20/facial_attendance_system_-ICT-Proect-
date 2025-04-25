@@ -1,4 +1,6 @@
 {
-    "__MANIFEST_APP_TITLE_Application title": "my-app",
+    "ERROR": "ERROR",
+    "Loading...": "Loading...",
+    "__MANIFEST_APP_TITLE_Application title": "facial-attendance",
     "__MANIFEST_APP_DESCRIPTION_Application description": ""
 }
