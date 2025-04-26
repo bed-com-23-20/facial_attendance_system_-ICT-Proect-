@@ -20,7 +20,7 @@ const Enrollment = () => {
         setEditingEnrollment(null); // Clear editing state for new enrollment
         setShowEnrollmentForm(true);
     };
-
+//
     const handleCloseForm = () => {
         setShowEnrollmentForm(false);
     };
@@ -49,10 +49,10 @@ const Enrollment = () => {
         `${enrollment.firstName} ${enrollment.surname} ${enrollment.programOfStudy} ${enrollment.yearOfStudy}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
   
-    useEffect(() => { 
-         setOrdId( fetchOrganisationUnits())
-         console.log(ordId)
-      },[ordId])
+    // useEffect(() => { 
+    //      setOrdId( fetchOrganisationUnits())
+    //      console.log(ordId)
+    //   },[ordId])
 
     return (
         <div style={{ padding: '10px', position: 'relative' }}>
@@ -122,11 +122,11 @@ const Enrollment = () => {
                                 School
                                 <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
                                     <option value="">Select a school</option>
-                                    {/* {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
+                                     {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
                                         <option key={school} value={school}>
                                             {school}
                                         </option>
-                                    ))} */}
+                                    ))} 
                          {/* { ordId.map(item => {
                         const li = document.createElement('li');
                         li.textContent = `${item.name} (${item.id})`;
