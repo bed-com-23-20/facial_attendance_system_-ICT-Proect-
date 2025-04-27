@@ -1,9 +1,11 @@
+import React, { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+
 // <---- STARTS HERE ---->
 
 const BASE_URL = 'http://localhost:8081';
 const AUTH = 'Basic ' + btoa('admin:district'); // Change credentials if needed
-let ordId ='';
-let EntityId='';
+let EntityId='bb62ffk4ktU';
 
 
 // all required function for enrollment functionality
@@ -103,28 +105,31 @@ export async function fetchOrganisationUnits() {
 // getTrackedEntityTypes(BASE_URL,AUTH)
 // fetchOrganisationUnits() 
 
-export async function registerStudent(form) {
+export async function registerStudent(form,orgId) {
 
-const formData = new FormData(form);
+// if(form.get('profilePictureInput') != ''){
+//   { attribute: "X2qaU4UdHRZ", value: form.get('profilePictureInput') }
+// }
+
 const payload = {
   trackedEntityType: EntityId,
-  orgUnit: ordId,
+  orgUnit: orgId,
   attributes :[
-{ attribute: "ct4z0T1F36i", value: formData.get('school') },
-{ attribute: "aqBmqM1onC7", value: formData.get('academicYear') },
-{ attribute: "EHTfWCHTYCo", value: formData.get('yearOfStudy') },
-{ attribute: "ADiCfoRxZI2", value: formData.get('programOfStudy') },
-{ attribute: "ixauprApakv", value: formData.get('enrollmentDate') },
-{ attribute: "ED1V1bFMtb1", value: formData.get('profilePictureInput') },
-{ attribute: "nlAAn9uTTie", value: formData.get('firstName') },
-{ attribute: "KHFDJkJgUvj", value: formData.get('surname') },
-{ attribute: "Cg56JK84NAd", value: formData.get('gender') },
-{ attribute: "EAPD9u4neIp", value: formData.get('dob') },
-{ attribute: "hhyS9WANpuz", value: formData.get('Nationality') },
-{ attribute: "pzZJIX2yMEZ", value: formData.get('guardian') },
-{attribute: "ofiRHvsg4Mt", value: formData.get('regNumber') },
+{ attribute: "mmFgrN2oj6j", value: form.get('school') },
+{ attribute: "hVZmLsS7oIu", value: form.get('academicYear') },
+{ attribute: "Sg4zAy8CAsV", value: form.get('yearOfStudy') },
+{ attribute: "RAzUf1PE5dJ", value: form.get('programOfStudy') },
+{ attribute: "o7qXV3EGIeq", value: form.get('enrollmentDate') },
+{ attribute: "MPpBF8ba0il", value: form.get('firstName') },
+{ attribute: "wO9nqCGAAC1", value: form.get('surname') },
+{ attribute: "SxF7h6hwEo1", value: form.get('gender') },
+{ attribute: "qlF7eQUwqsK", value: form.get('dob') },
+{ attribute: "swYDOfz0g3W", value: form.get('Nationality') },
+{ attribute: "ty0MMgWOtwT", value: form.get('guardian') },
+{attribute: "EgbkEerDZET", value: form.get('regNumber') },
 ]
 };
+// console.log(form.get('profilePictureInput') )
 try{
 const res = await fetch(`http://localhost:8081/api/trackedEntityInstances
 `, {
@@ -260,3 +265,47 @@ console.log(result);
 }
 
 // <---- ENDS HERE ---->
+
+
+// { attribute: "ct4z0T1F36i", value: formData.get('school') },
+// { attribute: "aqBmqM1onC7", value: formData.get('academicYear') },
+// { attribute: "EHTfWCHTYCo", value: formData.get('yearOfStudy') },
+// { attribute: "ADiCfoRxZI2", value: formData.get('programOfStudy') },
+// { attribute: "ixauprApakv", value: formData.get('enrollmentDate') },
+// { attribute: "ED1V1bFMtb1", value: formData.get('profilePictureInput') },
+// { attribute: "nlAAn9uTTie", value: formData.get('firstName') },
+// { attribute: "KHFDJkJgUvj", value: formData.get('surname') },
+// { attribute: "Cg56JK84NAd", value: formData.get('gender') },
+// { attribute: "EAPD9u4neIp", value: formData.get('dob') },
+// { attribute: "hhyS9WANpuz", value: formData.get('Nationality') },
+// { attribute: "pzZJIX2yMEZ", value: formData.get('guardian') },
+// {attribute: "ofiRHvsg4Mt", value: formData.get('regNumber') },
+
+// export function RegisterStudentComponent() {
+//   const [loading, setLoading] = useState(false);
+
+//   const handleRegisterStudent = async (form, orgId) => {
+//     setLoading(true);
+//     try {
+//       await registerStudent(form, orgId);
+//     } catch (error) {
+//       console.error('Error registering student:', error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       {loading ? (
+//         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100px' }}>
+//           <CircularProgress />
+//         </div>
+//       ) : (
+//         <button onClick={() => handleRegisterStudent(/* pass form and orgId here */)}>
+//           Register Student
+//         </button>
+//       )}
+//     </div>
+//   );
+// }

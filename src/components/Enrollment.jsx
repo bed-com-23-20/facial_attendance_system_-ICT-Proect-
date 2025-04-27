@@ -3,18 +3,30 @@ import EnrollmentForm from './EnrollmentForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import {fetchOrganisationUnits} from '../integration'
-
+import { Link } from 'react-router-dom';
 const Enrollment = () => {
     const [selectedSchool, setSelectedSchool] = useState('');
     const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
     const [editingEnrollment, setEditingEnrollment] = useState(null); // Track the enrollment being edited
     const [searchQuery, setSearchQuery] = useState(''); // State for search query
-    const [ordId, setOrdId] = useState([]); // State for organization unit ID
+    const [orgUnits, setOrgUnits] = useState([]); // State for organization unit
+    const [orgUnitsId, setOrgUnitsId] = useState(''); // State for selected school id
     
-    const handleSchoolChange = (event) => {
-        setSelectedSchool(event.target.value);
+
+    const [selectedSchoolId, setSelectedSchoolId] = useState('');
+
+    const handleSchoolChange = (e) => {
+      const selectedId = e.target.value;
+      setSelectedSchoolId(selectedId);
+      const selectedSchools = orgUnits.find(item => item.id === selectedId);
+      if (selectedSchools) {
+        // console.log(`Name: ${selectedSchools.name}, ID: ${selectedSchools.id}`);
+        setSelectedSchool(selectedSchools.name);
+        setOrgUnitsId(selectedSchools.id);
+      }
     };
+
 
     const handleEnrollStudentClick = () => {
         setEditingEnrollment(null); // Clear editing state for new enrollment
@@ -48,11 +60,15 @@ const Enrollment = () => {
     const filteredEnrollments = enrollments.filter((enrollment) =>
         `${enrollment.firstName} ${enrollment.surname} ${enrollment.programOfStudy} ${enrollment.yearOfStudy}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  
+    //getting all org units
+    const find = async()=>{
+           const data = await fetchOrganisationUnits()
+         setOrgUnits( data)
+        }
     useEffect(() => { 
-         setOrdId( fetchOrganisationUnits())
-         console.log(ordId)
-      },[ordId])
+    
+       find()
+      },[selectedSchool])
 
     return (
         <div style={{ padding: '10px', position: 'relative' }}>
@@ -106,6 +122,7 @@ const Enrollment = () => {
                         {/* Enrollment Form Component */}
                         <EnrollmentForm
                             school={selectedSchool}
+                            orgId={orgUnitsId}
                             onSubmit={handleFormSubmit}
                             editingEnrollment={editingEnrollment} // Pass the editing enrollment
                         />
@@ -118,29 +135,17 @@ const Enrollment = () => {
                 <div style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', fontSize: '18px', fontFamily: 'Roboto, sans-serif' }}>
                         <div>
-                            <label>
-                                School
-                                <select style={{ marginLeft: '10px' }} onChange={handleSchoolChange}>
-                                    <option value="">Select a school</option>
-                                    {/* {["UNIMA", "MUBAS", "LUANAR", "MUST", "MZUNI", "KUHES"].map((school) => (
-                                        <option key={school} value={school}>
-                                            {school}
-                                        </option>
-                                    ))} */}
-                         {/* { ordId.map(item => {
-                        const li = document.createElement('li');
-                        li.textContent = `${item.name} (${item.id})`;
-                        li.style.cursor = 'pointer';
-
-                        li.onclick = () => {
-                        ordId=item.id
-                        // listTrackedEntityInstances(ordId)
-                        console.log(`Name: ${item.name}, ID: ${item.id}`);
-                            };
-                        }
-                          )} */}
-                                </select>
-                            </label>
+                        <label>
+                            School
+                            <select style={{ marginLeft: '10px' }} value={selectedSchoolId} onChange={handleSchoolChange}>
+                            <option value="">Select a school</option>
+                            {orgUnits.map(item => (
+                                <option key={item.id} value={item.id}>
+                                {item.name}
+                                </option>
+                            ))}
+                            </select>
+                        </label>
                         </div>
                         <div style={{ marginLeft: '20px' }}>
                             <label>
@@ -190,21 +195,22 @@ const Enrollment = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ccc', paddingLeft: '30px' }}
                             />
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={faSearch}
                                 style={{ position: 'absolute', left: '10px', color: '#ccc' }}
-                            />
+                            /> */}
                         </div>
 
                         {/* Buttons */}
                         <button style={{ padding: '5px 10px' }} onClick={handleEnrollStudentClick}>
-                            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
+                            {/* <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} /> */}
                             Enroll Student
                         </button>
                         <button style={{ padding: '5px 10px' }}>
-                            <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} />
+                            {/* <FontAwesomeIcon icon={faDownload} style={{ marginRight: '5px' }} /> */}
                             Download PDF
                         </button>
+                        <Link to='/enrollmentPage'>Enroll</Link>
                     </div>
 
                     {/* Display Enrollments in a Table */}
