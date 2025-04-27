@@ -10,21 +10,7 @@ import EnrollmentPage from './components/enrollmentPage'
 const MyApp=()=> {
 const [selectedSchool, setSelectedSchool] = useState('');
   const [orgUnits, setOrgUnits] = useState([]); // State for organization unit
-    // const [orgUnitsId, setOrgUnitsId] = useState(''); // State for selected school id
 
-
-        // const [selectedSchoolId, setSelectedSchoolId] = useState('');
-    
-        // const handleSchoolChange = (e) => {
-        //   const selectedId = e.target.value;
-        //   setSelectedSchoolId(selectedId);
-        //   const selectedSchools = orgUnits.find(item => item.id === selectedId);
-        //   if (selectedSchools) {
-        //     // console.log(`Name: ${selectedSchools.name}, ID: ${selectedSchools.id}`);
-        //     setSelectedSchool(selectedSchools.name);
-        //     setOrgUnitsId(selectedSchools.id);
-        //   }
-        // };
     
       //getting all org units
       const find = async()=>{
@@ -47,4 +33,3 @@ const [selectedSchool, setSelectedSchool] = useState('');
   );
 }
 export default MyApp            
-// orgUnitsId={orgUnitsId} selected={selectedSchoolId} handleSchoolChange={handleSchoolChange}

@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { recordAttendance, registerStudent } from '../integration';
 
-const EnrollmentForm = ({ school, orgId,onSubmit, editingEnrollment }) => {
+const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
     const [formData, setFormData] = useState({
         school: school || '',
         academicYear: '',
@@ -18,29 +17,23 @@ const EnrollmentForm = ({ school, orgId,onSubmit, editingEnrollment }) => {
         profilePicture: '',
     });
 
-
-   const DataForm =(obj) => {
+    const DataForm = (obj) => {
         const form = new FormData();
-      
-        // Map object fields to FormData
         form.append('school', obj.school);
         form.append('academicYear', obj.academicYear);
         form.append('yearOfStudy', obj.yearOfStudy);
         form.append('programOfStudy', obj.programOfStudy);
         form.append('enrollmentDate', obj.enrollmentDate);
-        form.append('profilePictureInput', obj.profilePicture || ''); // If null, put empty string
+        form.append('profilePictureInput', obj.profilePicture || '');
         form.append('firstName', obj.firstName);
         form.append('surname', obj.surname);
         form.append('gender', obj.gender);
-        form.append('dob', obj.dateOfBirth); // Make sure this key matches what registerStudent expects
+        form.append('dob', obj.dateOfBirth);
         form.append('Nationality', obj.nationality);
         form.append('guardian', obj.guardianName);
         form.append('regNumber', obj.regNumber);
-      
-        // Now pass it to registerStudent
-        registerStudent(form,orgId);
-      }
-      
+        registerStudent(form, orgId);
+    };
 
     useEffect(() => {
         if (editingEnrollment) {
@@ -99,124 +92,110 @@ const EnrollmentForm = ({ school, orgId,onSubmit, editingEnrollment }) => {
     };
 
     return (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-            <h2>Student Enrollment Form</h2>
-            <form onSubmit={handleSubmit}>
-                <h3>Enrollment Details</h3>
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Student Enrollment Form</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <h3 className="text-xl font-semibold text-gray-700">Enrollment Details</h3>
 
-                <div style={{ marginBottom: '15px' }}>
-                    <label>School</label>
-                    <input
-                        type="text"
-                        name="school"
-                        value={formData.school}
-                        onChange={handleChange}
-                        disabled
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                    <small>This is the school selected for enrollment</small>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">School</label>
+                        <input
+                            type="text"
+                            name="school"
+                            value={formData.school}
+                            onChange={handleChange}
+                            disabled
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                        <small className="text-gray-500">This is the school selected for enrollment</small>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Registration Number</label>
+                        <input
+                            type="text"
+                            name="regNumber"
+                            value={formData.regNumber}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Academic Year</label>
+                        <select
+                            name="academicYear"
+                            value={formData.academicYear}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Select Year</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                        </select>
+                        <small className="text-gray-500">Check that academic year matches the enrollment year</small>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Year of Study</label>
+                        <select
+                            name="yearOfStudy"
+                            value={formData.yearOfStudy}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Select Year</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Program of Study</label>
+                        <select
+                            name="programOfStudy"
+                            value={formData.programOfStudy}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Select Program</option>
+                            <option value="ComputerScience">Computer Science</option>
+                            <option value="Statistics">Statistics</option>
+                            <option value="PoliticalScience">Political Science</option>
+                            <option value="Arts">Bachelor of Arts</option>
+                            <option value="InformationSystem">Information System</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Enrollment Date</label>
+                        <input
+                            type="date"
+                            name="enrollmentDate"
+                            value={formData.enrollmentDate}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Registration Number</label>
-                    <input
-                        type="text"
-                        name="regNumber"
-                        value={formData.regNumber}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
+                <h3 className="text-xl font-semibold text-gray-700">Student Profile</h3>
 
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Academic Year</label>
-                    <select
-                        name="academicYear"
-                        value={formData.academicYear}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    >
-                        <option value="">Select Year</option>
-                        <option value="2024-2025">2024-2025</option>
-                        <option value="2025-2026">2025-2026</option>
-                    </select>
-                    <small>Check that academic year matches the enrollment year</small>
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Year of Study</label>
-                    <select
-                        name="yearOfStudy"
-                        value={formData.yearOfStudy}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    >
-                        <option value="">Select Year</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Program of Study</label>
-                    <select
-                        name="programOfStudy"
-                        value={formData.programOfStudy}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    >
-                        <option value="">Select Program</option>
-                        <option value="ComputerScience">Computer Science</option>
-                        <option value="Statistics">Statistics</option>
-                        <option value="PoliticalScience">Political Science</option>
-                        <option value="Arts">Bachelor of Arts</option>
-                        <option value="InformationSystem">Information System</option>
-                    </select>
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Enrollment Date</label>
-                    <input
-                        type="date"
-                        name="enrollmentDate"
-                        value={formData.enrollmentDate}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
-
-                <h3 style={{ marginTop: '30px' }}>Student Profile</h3>
-
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <div className="flex flex-col items-center">
                     {formData.profilePicture ? (
-                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <div className="relative">
                             <img
                                 src={formData.profilePicture}
                                 alt="Profile Preview"
-                                style={{
-                                    width: '150px',
-                                    height: '150px',
-                                    borderRadius: '50%',
-                                    objectFit: 'cover',
-                                    border: '2px solid #ccc',
-                                }}
+                                className="w-36 h-36 rounded-full object-cover border-2 border-gray-300"
                             />
                             <button
                                 type="button"
-                                style={{
-                                    position: 'absolute',
-                                    bottom: '10px',
-                                    right: '10px',
-                                    borderRadius: '50%',
-                                    padding: '5px',
-                                    backgroundColor: '#1976d2',
-                                    color: 'white',
-                                    border: 'none',
-                                    cursor: 'pointer'
-                                }}
+                                className="absolute bottom-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-md"
                                 onClick={() => document.getElementById('profilePictureInput').click()}
                             >
                                 ✏️
@@ -225,14 +204,7 @@ const EnrollmentForm = ({ school, orgId,onSubmit, editingEnrollment }) => {
                     ) : (
                         <button
                             type="button"
-                            style={{
-                                padding: '10px 20px',
-                                backgroundColor: '#1976d2',
-                                color: 'white',
-                                border: 'none',
-                                cursor: 'pointer',
-                                borderRadius: '5px'
-                            }}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
                             onClick={() => document.getElementById('profilePictureInput').click()}
                         >
                             Upload Profile Picture
@@ -242,108 +214,94 @@ const EnrollmentForm = ({ school, orgId,onSubmit, editingEnrollment }) => {
                         id="profilePictureInput"
                         type="file"
                         accept="image/*"
-                        style={{ display: 'none' }}
+                        className="hidden"
                         onChange={handleFileChange}
                     />
                 </div>
 
-                <div style={{ marginBottom: '15px' }}>
-                    <label>First Name</label>
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">First Name</label>
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Surname</label>
+                        <input
+                            type="text"
+                            name="surname"
+                            value={formData.surname}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Gender</label>
+                        <select
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            value={formData.dateOfBirth}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Nationality</label>
+                        <input
+                            type="text"
+                            name="nationality"
+                            value={formData.nationality}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Guardian's Name</label>
+                        <input
+                            type="text"
+                            name="guardianName"
+                            value={formData.guardianName}
+                            onChange={handleChange}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                    </div>
                 </div>
 
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Surname</label>
-                    <input
-                        type="text"
-                        name="surname"
-                        value={formData.surname}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Gender</label>
-                    <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    >
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Date of Birth</label>
-                    <input
-                        type="date"
-                        name="dateOfBirth"
-                        value={formData.dateOfBirth}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Nationality</label>
-                    <input
-                        type="text"
-                        name="nationality"
-                        value={formData.nationality}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <label>Guardian's Name</label>
-                    <input
-                        type="text"
-                        name="guardianName"
-                        value={formData.guardianName}
-                        onChange={handleChange}
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-                    />
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+                <div className="flex justify-between mt-6">
                     <button
                         type="button"
                         onClick={handleCancel}
-                        style={{
-                            width: '48%',
-                            padding: '10px',
-                            backgroundColor: '#d32f2f',
-                            color: 'white',
-                            border: 'none',
-                            cursor: 'pointer',
-                            borderRadius: '5px'
-                        }}
+                        className="w-1/2 mr-2 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
                     >
                         Clear and Cancel
                     </button>
                     <button
                         type="submit"
-                        style={{
-                            width: '48%',
-                            padding: '10px',
-                            backgroundColor: '#1976d2',
-                            color: 'white',
-                            border: 'none',
-                            cursor: 'pointer',
-                            borderRadius: '5px'
-                        }}
+                        className="w-1/2 ml-2 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
                     >
                         Save and Submit
                     </button>
