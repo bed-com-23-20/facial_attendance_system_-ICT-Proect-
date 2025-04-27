@@ -92,12 +92,12 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Student Enrollment Form</h2>
+        <div className=" mx-auto px-2 shadow-lg rounded-lg">
+            <h2 className="text-3xl font-bold mb-6 text-center text-blue-800">Student Enrollment Form</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <h3 className="text-xl font-semibold text-gray-700">Enrollment Details</h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">School</label>
                         <input
@@ -106,7 +106,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             value={formData.school}
                             onChange={handleChange}
                             disabled
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <small className="text-gray-500">This is the school selected for enrollment</small>
                     </div>
@@ -118,7 +118,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="regNumber"
                             value={formData.regNumber}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
 
@@ -128,7 +128,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="academicYear"
                             value={formData.academicYear}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
                             <option value="">Select Year</option>
                             <option value="2024-2025">2024-2025</option>
@@ -143,7 +143,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="yearOfStudy"
                             value={formData.yearOfStudy}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
                             <option value="">Select Year</option>
                             <option value="1">1</option>
@@ -160,7 +160,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="programOfStudy"
                             value={formData.programOfStudy}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
                             <option value="">Select Program</option>
                             <option value="ComputerScience">Computer Science</option>
@@ -178,7 +178,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="enrollmentDate"
                             value={formData.enrollmentDate}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
                 </div>
@@ -219,7 +219,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                     />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">First Name</label>
                         <input
@@ -227,7 +227,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
 
@@ -238,7 +238,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="surname"
                             value={formData.surname}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
 
@@ -248,7 +248,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="gender"
                             value={formData.gender}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -264,7 +264,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="dateOfBirth"
                             value={formData.dateOfBirth}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
 
@@ -275,7 +275,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="nationality"
                             value={formData.nationality}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
 
@@ -286,7 +286,7 @@ const EnrollmentForm = ({ school, orgId, onSubmit, editingEnrollment }) => {
                             name="guardianName"
                             value={formData.guardianName}
                             onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border h-10 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
                 </div>
