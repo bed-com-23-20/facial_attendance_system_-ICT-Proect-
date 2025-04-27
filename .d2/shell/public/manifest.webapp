@@ -14,8 +14,7 @@
   "icons": {
     "48": "dhis2-app-icon.png"
   },
-  "manifest_generated_at": "Sat Apr 26 2025 01:55:41 GMT+0200 (South Africa Standard Time)",
-  "manifest_generated_at": "Sun Apr 27 2025 16:14:22 GMT+0300 (East Africa Time)",
+  "manifest_generated_at": "Sun Apr 27 2025 23:36:21 GMT+0300 (East Africa Time)",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"

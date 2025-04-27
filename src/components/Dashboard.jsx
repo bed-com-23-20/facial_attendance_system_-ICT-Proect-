@@ -6,7 +6,7 @@ const Sidebar = ({ isOpen }) => (
   <div className={`bg-gray-800 text-white h-screen p-4 ${isOpen ? 'w-64' : 'w-16'} transition-all duration-300`}>
     <div className="flex items-center space-x-2 mb-6 border-b border-gray-700 pb-2">
       {/* <Home className="w-6 h-6" /> */}
-      {isOpen && <span className="text-lg font-semibold text-blue-300">FAS Dashboard</span>}
+      {isOpen && <span className="text-lg font-semibold text-blue-300">FRAS Dashboard</span>}
     </div>
     <nav>
       {[

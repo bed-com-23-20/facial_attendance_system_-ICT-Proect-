@@ -167,7 +167,7 @@ const res = await fetch(`${BASE_URL}/api/trackedEntityInstances?ou=${orgUnit}`, 
 });
 
 const result = await res.json();
-console.log(result);
+return result;
 
 }
 
