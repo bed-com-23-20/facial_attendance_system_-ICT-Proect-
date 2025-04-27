@@ -107,28 +107,32 @@ export async function fetchOrganisationUnits() {
 
 export async function registerStudent(form,orgId) {
 
-// if(form.get('profilePictureInput') != ''){
-//   { attribute: "X2qaU4UdHRZ", value: form.get('profilePictureInput') }
-// }
+  const profilePicture = form.get('profilePictureInput');
 
-const payload = {
-  trackedEntityType: EntityId,
-  orgUnit: orgId,
-  attributes :[
-{ attribute: "mmFgrN2oj6j", value: form.get('school') },
-{ attribute: "hVZmLsS7oIu", value: form.get('academicYear') },
-{ attribute: "Sg4zAy8CAsV", value: form.get('yearOfStudy') },
-{ attribute: "RAzUf1PE5dJ", value: form.get('programOfStudy') },
-{ attribute: "o7qXV3EGIeq", value: form.get('enrollmentDate') },
-{ attribute: "MPpBF8ba0il", value: form.get('firstName') },
-{ attribute: "wO9nqCGAAC1", value: form.get('surname') },
-{ attribute: "SxF7h6hwEo1", value: form.get('gender') },
-{ attribute: "qlF7eQUwqsK", value: form.get('dob') },
-{ attribute: "swYDOfz0g3W", value: form.get('Nationality') },
-{ attribute: "ty0MMgWOtwT", value: form.get('guardian') },
-{attribute: "EgbkEerDZET", value: form.get('regNumber') },
-]
-};
+  const attributes = [
+    { attribute: "mmFgrN2oj6j", value: form.get('school') },
+    { attribute: "hVZmLsS7oIu", value: form.get('academicYear') },
+    { attribute: "Sg4zAy8CAsV", value: form.get('yearOfStudy') },
+    { attribute: "RAzUf1PE5dJ", value: form.get('programOfStudy') },
+    { attribute: "o7qXV3EGIeq", value: form.get('enrollmentDate') },
+    { attribute: "MPpBF8ba0il", value: form.get('firstName') },
+    { attribute: "wO9nqCGAAC1", value: form.get('surname') },
+    { attribute: "SxF7h6hwEo1", value: form.get('gender') },
+    { attribute: "qlF7eQUwqsK", value: form.get('dob') },
+    { attribute: "swYDOfz0g3W", value: form.get('Nationality') },
+    { attribute: "ty0MMgWOtwT", value: form.get('guardian') },
+    { attribute: "EgbkEerDZET", value: form.get('regNumber') },
+  ];
+
+  if (profilePicture && profilePicture.trim() !== '') {
+    attributes.push({ attribute: "X2qaU4UdHRZ", value: profilePicture });
+  }
+
+  const payload = {
+    trackedEntityType: EntityId,
+    orgUnit: orgId,
+    attributes: attributes,
+  };
 // console.log(form.get('profilePictureInput') )
 try{
 const res = await fetch(`http://localhost:8081/api/trackedEntityInstances
@@ -142,10 +146,10 @@ const res = await fetch(`http://localhost:8081/api/trackedEntityInstances
 });
 
 const result = await res.json();
-console.log(result);
+alert('Registration successful');
 }
 catch(error){
-console.log(error)
+alert('error while registrattting sstudent')
 
 }
 }

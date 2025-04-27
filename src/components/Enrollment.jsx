@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faDownload, faPen, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import {fetchOrganisationUnits} from '../integration'
 import { Link } from 'react-router-dom';
-const Enrollment = () => {
+const Enrollment = ({orgUnit}) => {
     const [selectedSchool, setSelectedSchool] = useState('');
     const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
     const [enrollments, setEnrollments] = useState([]); // Store submitted enrollment data
@@ -62,8 +62,8 @@ const Enrollment = () => {
     );
     //getting all org units
     const find = async()=>{
-           const data = await fetchOrganisationUnits()
-         setOrgUnits( data)
+           
+         setOrgUnits( orgUnit)
         }
     useEffect(() => { 
     
