@@ -105,8 +105,7 @@ export async function fetchOrganisationUnits() {
 // getTrackedEntityTypes(BASE_URL,AUTH)
 // fetchOrganisationUnits() 
 
-export async function registerStudent(form,orgId) {
-
+export async function registerStudent(form, orgId, loading) {
   const profilePicture = form.get('profilePictureInput');
 
   const attributes = [
@@ -133,26 +132,37 @@ export async function registerStudent(form,orgId) {
     orgUnit: orgId,
     attributes: attributes,
   };
-// console.log(form.get('profilePictureInput') )
-try{
-const res = await fetch(`http://localhost:8081/api/trackedEntityInstances
-`, {
-  method: 'POST',
-  headers: {
-    'Authorization': AUTH,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(payload)
-});
 
-const result = await res.json();
-alert('Registration successful');
-}
-catch(error){
-alert('error while registrattting sstudent')
+  try {
+    const res = await fetch(`http://localhost:8081/api/trackedEntityInstances`, {
+      method: 'POST',
+      headers: {
+        'Authorization': AUTH,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
+    const result = await res.json();
+    console.log("Registration response:", result);
+
+    if (res.ok) {
+      alert('Registration successful');
+      const trackedEntityInstanceId = result.response.importSummaries[0].reference; 
+      // 👆 important: this is how you get the registered TEI ID
+     const isLoading= await enrollStudent(trackedEntityInstanceId, orgId,loading);
+     return isLoading;
+
+    } else {
+      alert('Registration failed');
+    }
+  }
+  catch (error) {
+    alert('Error while registering student');
+    console.error(error);
+  }
 }
-}
+
 // <---- ENDS HERE ---->
 
 
@@ -172,42 +182,40 @@ return result;
 }
 
 //enrolling a student into particular program
-export async function enrollStudent() {
-//  let trackedEntityInstanceId = 'hK2htiuhSvy';
+export async function enrollStudent(trackedEntityInstanceId, orgUnitId,loading) {
+  const payload = {
+    trackedEntityInstance: trackedEntityInstanceId,
+    program: "dhQHvVG0FAf", // your program ID
+    orgUnit: orgUnitId,
+    enrollmentDate: new Date().toISOString().split('T')[0],
+    incidentDate: new Date().toISOString().split('T')[0]
+  };
 
-const payload = {
-  trackedEntityInstance: "j9P9ggylS3u",
-  program: "dhQHvVG0FAf",
-  orgUnit: "JrmBKF0gLkL",
-  enrollmentDate: new Date().toISOString().split('T')[0],
-  incidentDate: new Date().toISOString().split('T')[0]
-};
+  try {
+    const res = await fetch("http://localhost:8081/api/enrollments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: AUTH
+      },
+      body: JSON.stringify(payload),
+    });
 
-try {
-  fetch("http://localhost:8081/api/enrollments", {
+    const data = await res.json();
+    console.log("Enrollment response:", data);
 
-  method: "POST",
-  headers: {
-      "Content-Type": "application/json",
-      Authorization: "Basic " + btoa("admin:district"),
-  },
-  body: JSON.stringify(payload),
-  })
-  .then(async (res) => {
-  const data = await res.json();
-  console.log("Enrollment response:", data);
-  if (res.ok) {
+    if (res.ok) {
       console.log("Enrollment successful:", data);
-      document.getElementById('output').innerText = `Enrollment successful: ${JSON.stringify(data, null, 2)}`;
-  } else {
+     
+    } else {
       console.error("Enrollment failed:", data);
-      document.getElementById('output').innerText = `Enrollment failed: ${JSON.stringify(data, null, 2)}`;
-  }
-  })
-} 
-catch(error){
-  console.error("Error during enrollment:", error);
-  }
+    }
+  } 
+  catch (error) {
+    console.error("Error during enrollment:", error);
+  } 
+  loading = false;
+  return loading;
 }
 
 

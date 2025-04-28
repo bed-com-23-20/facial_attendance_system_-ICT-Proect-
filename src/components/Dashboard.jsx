@@ -10,13 +10,13 @@ const Sidebar = ({ isOpen }) => (
     </div>
     <nav>
       {[
-        { label: "Registration", icon: Users },
-        { label: "Enrollments", icon:  FileText },
-        { label: "Attendances", icon: Clock },
-        { label: "Reports", icon: GraduationCap },
-        { label: "Transfer", icon: Repeat }
-      ].map(({ label, icon: Icon }) => (
-        <a href={label} key={label} className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700 transition-colors pb-4">
+        { label: "Registration", icon: Users, path: "/enrollment" },
+        { label: "Enrollments", icon: FileText, path: "/enrollmentPage" },
+        { label: "Attendance", icon: Clock, path: "/performance" },
+        { label: "Reports", icon: GraduationCap, path: "/final-result" },
+        { label: "Transfer", icon: Repeat, path: "/transfer" }
+      ].map(({ label, icon: Icon, path }) => (
+        <a href={path} key={label} className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700 transition-colors pb-4">
           <Icon className="w-6 h-6 " />
           {isOpen && <span className="w-10">{label}</span>}
         </a>
