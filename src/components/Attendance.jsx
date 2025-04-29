@@ -1,178 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import {
-    Container, Typography, Button, TextField, MenuItem,
-    Grid, Paper, CircularProgress
-} from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Typography, TextField, MenuItem, Button, Grid, Paper } from '@mui/material';
 import Webcam from 'react-webcam';
-import axios from 'axios';
+import { format } from 'date-fns';
 
-const Attendance = ({ courses, students, onAttendanceComplete }) => {
-    const [selectedCourse, setSelectedCourse] = useState('');
-    const [attendanceList, setAttendanceList] = useState([]);
-    const [isTakingAttendance, setIsTakingAttendance] = useState(false);
-    const [attendanceTime, setAttendanceTime] = useState(30); // in minutes
-    const [timer, setTimer] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const webcamRef = React.useRef(null);
+const Attendance = ({ courses = [], students = [], onAttendanceSubmit }) => {
+  const [selectedCourse, setSelectedCourse] = useState('');
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [attendanceData, setAttendanceData] = useState({});
+  const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes
+  const [isTakingAttendance, setIsTakingAttendance] = useState(false);
+  const webcamRef = useRef(null);
 
-    useEffect(() => {
-        if (selectedCourse) {
-            const courseStudents = students.filter(s => s.courseId === selectedCourse);
-            const list = courseStudents.map(s => ({
-                ...s,
-                status: 'pending',
-            }));
-            setAttendanceList(list);
+  // Filter students based on selected course
+  useEffect(() => {
+    if (selectedCourse) {
+      const enrolled = students.filter(student =>
+        student.courses?.includes(selectedCourse)
+      );
+
+      setSelectedStudents(enrolled);
+
+      const initial = enrolled.reduce((acc, student) => {
+        acc[student.id] = { status: 'Not Checked', faceCaptured: false };
+        return acc;
+      }, {});
+      setAttendanceData(initial);
+    }
+  }, [selectedCourse, students]);
+
+  // Timer countdown and auto-submit
+  useEffect(() => {
+    if (!isTakingAttendance) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          finalizeAttendance();
+          return 0;
         }
-    }, [selectedCourse, students]);
+        return prev - 1;
+      });
+    }, 1000);
 
-    useEffect(() => {
-        let interval;
-        if (isTakingAttendance) {
-            setTimer(attendanceTime * 60); // convert minutes to seconds
-            interval = setInterval(() => {
-                setTimer(prev => {
-                    if (prev <= 1) {
-                        clearInterval(interval);
-                        finalizeAttendance();
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
+    return () => clearInterval(timer);
+  }, [isTakingAttendance]);
+
+  const finalizeAttendance = () => {
+    const updated = { ...attendanceData };
+    Object.keys(updated).forEach((id) => {
+      if (!updated[id].faceCaptured) {
+        updated[id].status = 'Late';
+      }
+    });
+    setAttendanceData(updated);
+    setIsTakingAttendance(false);
+    onAttendanceSubmit(updated);
+  };
+
+  const handleCourseChange = (event) => {
+    setSelectedCourse(event.target.value);
+    setIsTakingAttendance(false); // reset if changing course
+    setTimeLeft(30 * 60);
+  };
+
+  const handleCaptureFace = async (studentId) => {
+    if (!webcamRef.current) return;
+    const imageSrc = webcamRef.current.getScreenshot();
+
+    try {
+      const res = await fetch('/api/attendance/verify-face', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId, course: selectedCourse, image: imageSrc }),
+      });
+
+      const data = await res.json();
+
+      setAttendanceData(prev => ({
+        ...prev,
+        [studentId]: {
+          status: data.matched ? 'Present' : 'Not Matched',
+          faceCaptured: true,
         }
-        return () => clearInterval(interval);
-    }, [isTakingAttendance]);
+      }));
+    } catch (err) {
+      console.error('Face verification error:', err);
+    }
+  };
 
-    const capture = async () => {
-        if (!webcamRef.current) return;
-    
-        const imageSrc = webcamRef.current.getScreenshot();
-        if (!imageSrc) return;
-    
-        setLoading(true);
-        try {
-            // Step 1: Verify face and get matched students
-            const verifyRes = await axios.post('/attendance/verify', {
-                image: imageSrc,
-                courseId: selectedCourse
-            });
-    
-            const matchedRegNumbers = verifyRes.data.matchedRegistrationNumbers;
-    
-            // Step 2: Mark attendance for matched students
-            const updatedList = await Promise.all(attendanceList.map(async (student) => {
-                if (matchedRegNumbers.includes(student.registrationNumber)) {
-                    try {
-                        await axios.post('/attendance/mark', {
-                            registrationNumber: student.registrationNumber
-                        });
-                        return { ...student, status: 'present' };
-                    } catch (err) {
-                        console.error(`Failed to mark ${student.registrationNumber}`, err);
-                    }
-                }
-                return student;
-            }));
-    
-            setAttendanceList(updatedList);
-        } catch (err) {
-            console.error("Error during verification", err);
-        }
-        setLoading(false);
-    };
-    
-    const finalizeAttendance = () => {
-        const updatedList = attendanceList.map(student => {
-            if (student.status === 'pending') {
-                return { ...student, status: 'late' };
-            }
-            return student;
-        });
-        setAttendanceList(updatedList);
-        setIsTakingAttendance(false);
-        onAttendanceComplete(updatedList);
-    };
+  const handleStartAttendance = async () => {
+    setIsTakingAttendance(true);
+    setTimeLeft(30 * 60);
 
-    return (
-        <Container>
-            <Typography variant="h5" gutterBottom>Take Attendance</Typography>
+    // Sequential capture (or you can parallelize with Promise.all if backend supports it)
+    for (const student of selectedStudents) {
+      await handleCaptureFace(student.id);
+    }
+  };
 
-            <Grid container spacing={2} sx={{ mb: 2 }}>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        select
-                        label="Select Course"
-                        fullWidth
-                        value={selectedCourse}
-                        onChange={(e) => setSelectedCourse(e.target.value)}
-                    >
-                        {courses.map(course => (
-                            <MenuItem key={course.id} value={course.id}>
-                                {course.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+  const formatTime = (secs) => {
+    const min = Math.floor(secs / 60);
+    const sec = secs % 60;
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  };
+
+  return (
+    <Container>
+      <Typography variant="h4" gutterBottom>Take Attendance</Typography>
+
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <TextField
+            select
+            label="Select Course"
+            fullWidth
+            value={selectedCourse}
+            onChange={handleCourseChange}
+          >
+            {courses.length > 0 ? (
+              courses.map(course => (
+                <MenuItem key={course} value={course}>{course}</MenuItem>
+              ))
+            ) : (
+              <MenuItem value="">No courses available</MenuItem>
+            )}
+          </TextField>
+        </Grid>
+
+        {selectedCourse && (
+          <>
+            <Grid item xs={12}>
+              <Typography variant="h6">
+                Students Enrolled in {selectedCourse}
+              </Typography>
+              <Paper sx={{ p: 2 }}>
+                <Grid container spacing={2}>
+                  {selectedStudents.length > 0 ? (
+                    selectedStudents.map(student => (
+                      <Grid item xs={12} key={student.id}>
+                        <Typography variant="body1">
+                          {student.firstName} {student.surname} — Status: <strong>{attendanceData[student.id]?.status}</strong>
+                        </Typography>
+                      </Grid>
+                    ))
+                  ) : (
+                    <Typography>No students enrolled for this course.</Typography>
+                  )}
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        label="Attendance Window (mins)"
-                        type="number"
-                        fullWidth
-                        value={attendanceTime}
-                        onChange={(e) => setAttendanceTime(Number(e.target.value))}
-                    />
-                </Grid>
+              </Paper>
             </Grid>
 
-            {selectedCourse && (
-                <>
-                    <Webcam
-                        audio={false}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        width="100%"
-                        style={{ borderRadius: 8 }}
-                    />
+            <Grid item xs={12}>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                width="100%"
+                videoConstraints={{ facingMode: "user" }}
+              />
+            </Grid>
 
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => setIsTakingAttendance(true)}
-                        sx={{ mt: 2 }}
-                        disabled={isTakingAttendance}
-                    >
-                        Start Attendance
-                    </Button>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleStartAttendance}
+                disabled={isTakingAttendance}
+              >
+                Start Attendance
+              </Button>
+            </Grid>
 
-                    {isTakingAttendance && (
-                        <>
-                            <Typography variant="body1" sx={{ mt: 1 }}>
-                                Time Remaining: {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, '0')}
-                            </Typography>
-                            <Button
-                                variant="outlined"
-                                onClick={capture}
-                                sx={{ mt: 2 }}
-                                disabled={loading}
-                            >
-                                {loading ? <CircularProgress size={20} /> : 'Capture & Verify'}
-                            </Button>
-                        </>
-                    )}
-
-                    <Paper sx={{ mt: 4, p: 2 }}>
-                        <Typography variant="h6">Attendance Status</Typography>
-                        {attendanceList.map((student) => (
-                            <Typography key={student.id}>
-                                {student.firstName} {student.surname} - {student.status}
-                            </Typography>
-                        ))}
-                    </Paper>
-                </>
+            {isTakingAttendance && (
+              <Grid item xs={12}>
+                <Typography variant="h6">
+                  Time Left: {formatTime(timeLeft)}
+                </Typography>
+              </Grid>
             )}
-        </Container>
-    );
+          </>
+        )}
+      </Grid>
+    </Container>
+  );
 };
 
 export default Attendance;

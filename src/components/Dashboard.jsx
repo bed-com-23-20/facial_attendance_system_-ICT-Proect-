@@ -2,32 +2,40 @@ import { useState } from "react";
 import { Home, Users, Clock, FileText, GraduationCap, Repeat,ArrowRight,ArrowLeft } from "lucide-react";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const Sidebar = ({ isOpen }) => (
-  <div className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`}>
-    <div className="sidebar-item">
-      <Home className="icon" />
-      {isOpen && <span>Home</span>}
+
+const Sidebar = ({ isOpen }) => {
+  const location = useLocation();
+
+  return (
+    <div className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`}>
+      <div className="sidebar-item">
+        <Home className="icon" />
+        {isOpen && <span>Home</span>}
+      </div>
+      <nav>
+        {[
+          { label: "Enrollment", icon: Users },
+          { label: "Attendance", icon: Clock },
+          { label: "Performance", icon: FileText },
+          { label: "Final result", icon: GraduationCap },
+          { label: "Transfer", icon: Repeat }
+        ].map(({ label, icon: Icon }) => {
+          const path = `/${label.toLowerCase().replace(" ", "-")}`;
+          const isActive = location.pathname === path;
+
+          return (
+            <Link to={path} key={label} className={`sidebar-item ${isActive ? 'active' : ''}`}>
+              <Icon className="icon" />
+              {isOpen && <span>{label}</span>}
+            </Link>
+          );
+        })}
+      </nav>
     </div>
-    <nav>
-      {[
-        { label: "Enrollment", icon: Users },
-        { label: "Attendance", icon: Clock },
-        { label: "Performance", icon: FileText },
-        { label: "Final result", icon: GraduationCap },
-        { label: "Transfer", icon: Repeat }
-      ].map(({ label, icon: Icon }) => (
-        <a href={label}>
-        <div key={label} className="sidebar-item">
-          <Icon className="icon"/>
-         
-          {isOpen && <span>{label}</span>}
-        </div>
-        </a>
-      ))}
-    </nav>
-  </div>
-);
+  );
+};
 
 const Dashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);

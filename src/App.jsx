@@ -3,7 +3,6 @@ import i18n from '@dhis2/d2-i18n'
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import classes from './App.module.css'
-
 import Dashboard from './components/Dashboard'
 import Enrollment from './components/Enrollment'
 import Attendance from './components/Attendance'
