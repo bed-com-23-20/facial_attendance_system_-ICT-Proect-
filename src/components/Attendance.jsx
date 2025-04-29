@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Typography, TextField, MenuItem, Button, Grid, Paper } from '@mui/material';
 import Webcam from 'react-webcam';
-import { format } from 'date-fns';
 
 const Attendance = ({ courses = [], students = [], onAttendanceSubmit }) => {
   const [selectedCourse, setSelectedCourse] = useState('');
